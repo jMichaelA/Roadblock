@@ -61,8 +61,9 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             tPos = newGameText.getPos();
             tWidth = newGameText.getWidth();
             tHeight = newGameText.getHeight();
-            if (canY > (tPos.y - tHeight) && canY < (tPos.y + tHeight)) {
+            if (canY > (tPos.y  - tHeight) && canY < (tPos.y + tHeight)) {
                 if (canX > tPos.x - (tWidth / 2) && canX < tPos.x + (tWidth / 2)) {
+                    graphics.
                     mmSelected = true;
                 }
                 else {
@@ -208,6 +209,7 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
             //Draw main background
             graphics.background('media/mainMenuBg.png');
+            // graphics.background(null, 41.7418972, -111.8113987)
 
             //-------------------------------------------------------
             //  Draw Menu buttons
@@ -248,3 +250,5 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
     };
 
 }(MYGAME.graphics,MYGAME.input, MYGAME.gameStack));
+
+

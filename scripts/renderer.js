@@ -210,11 +210,26 @@ MYGAME.graphics = (function() {
     //  Function used to draw canvas backgrounds
     //
     //---------------------------------------------------
-	function background(image) {
-
-	    context.save();
-	    context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
-	    context.restore();
+	function background(image, lat, longitude) {
+		if(typeof(lat) !== 'undefined' && typeof(longitude) !== 'undefined'){
+			var google_tile = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" +lat + "," +
+	                    longitude + "&zoom=14&size=300x400&markers=color:blue|label:U|" +
+	                    lat + ',' + longitude;
+		      
+		    var imageObj = new Image();
+		    imageObj.src = google_tile;
+	    
+		    context.save();
+		    context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+		    // context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
+		    context.restore();
+		}
+		else{
+		    context.save();
+		     context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
+		    context.restore();
+			
+		}
 
 	}
 
