@@ -138,9 +138,9 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
             var canvas = document.getElementById('id-canvas');
 
-            newGameText.setPos(canvas.width - 500, 300);
-            controlsText.setPos(canvas.width - 500, ((canvas.height / 3) + ((canvas.height / 3) / 2)));
-            creditsText.setPos(canvas.width -500, (canvas.height / 3) + (((canvas.height / 3) / 2)) * 3);
+            newGameText.setPos(canvas.width - (canvas.width / 3), (canvas.height / 2));
+            controlsText.setPos(canvas.width - (canvas.width / 3), ((canvas.height / 2) + 150));
+            creditsText.setPos(canvas.width - (canvas.width / 3), ((canvas.height / 2) + 150 * 2));
 
             mouse.update(elapsedTime);
             //-----------------------------
@@ -218,7 +218,7 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             tHeight = newGameText.getHeight();
             tPos = newGameText.getPos();
 
-            graphics.roundRect(tPos.x, tPos.y - tHeight, 300, tHeight * 4, 20, 'black', mmColor, 3);
+            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', mmColor, 3);
             newGameText.draw();
             
             //Controls
@@ -226,7 +226,7 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             tHeight = controlsText.getHeight();
             tPos = controlsText.getPos();
 
-            graphics.roundRect(tPos.x, tPos.y - tHeight, 300, tHeight * 4, 20, 'black', cColor, 3);
+            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', cColor, 3);
             controlsText.draw();
 
             //Credits
@@ -234,7 +234,7 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             tHeight = creditsText.getHeight();
             tPos = creditsText.getPos();
 
-            graphics.roundRect(tPos.x, tPos.y - tHeight, 300, tHeight * 4, 20, 'black', cdColor, 3);
+            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', cdColor, 3);
             creditsText.draw();
         };
 

@@ -211,8 +211,9 @@ MYGAME.graphics = (function() {
     //
     //---------------------------------------------------
 	function background(image) {
+
 	    context.save();
-	    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+	    context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
 	    context.restore();
 
 	}
