@@ -5,37 +5,28 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
         var that = {
 
         },
-            newGameText = graphics.Text({
-                font: '32px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 'New Game',
-                baseLine: 'middle',
+        newGameText = graphics.Text({
+            font: '32px Arial',
+            align: 'center',
+            textColor: 'black',
+            text: 'New Game',
+            baseLine: 'middle',
                 x: graphics.canvas.width / 2,
                 y: graphics.canvas.height / 3
             }),
             controlsText = graphics.Text({
                 font: '32px Arial',
                 align: 'center',
-                textColor: 'lightgreen',
+                textColor: 'black',
                 text: 'Controls',
                 baseLine: 'middle',
                 x: graphics.canvas.width / 2,
                 y: (graphics.canvas.height / 3) + (graphics.canvas.height / 3) / 2
             }),
-            highScoresText = graphics.Text({
-                font: '32px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 'High Scores',
-                baseLine: 'middle',
-                x: graphics.canvas.width / 2,
-                y: (graphics.canvas.height / 3) + ((graphics.canvas.height / 3) / 2) * 2
-            }),
             creditsText = graphics.Text({
                 font: '32px Arial',
                 align: 'center',
-                textColor: 'lightgreen',
+                textColor: 'black',
                 text: 'Credits',
                 baseLine: 'middle',
                 x: graphics.canvas.width / 2,
@@ -46,16 +37,13 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             tPos = {},
             mmSelected = false,
             mmClicked = false,
-            mmColor = 'green',
+            mmColor = 'black',
             cSelected = false,
             cClicked = false,
-            cColor = 'green',
-            hsSelected = false,
-            hsClicked = false,
-            hsColor = 'green',
+            cColor = 'black',
             cdSelected = false,
             cdClicked = false,
-            cdColor = 'green',
+            cdColor = 'black',
 
             mouse = input.Mouse();
 
@@ -66,12 +54,9 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
                 canY = 0,
                 gameArea = document.getElementById('gameArea');
 
-            canX = e.clientX - gameArea.offsetLeft;// + 75;
-            canY = e.clientY - gameArea.offsetTop;// + 63;
+            canX = e.clientX;// + 75;
+            canY = e.clientY;// + 63;
 
-
-            //console.log('X: ' + canX + ' Y: ' + canY);
-            //console.log('tPos.X: ' + tPos.x + ' tPos.Y ' + tPos.y);
             //NEW GAME
             tPos = newGameText.getPos();
             tWidth = newGameText.getWidth();
@@ -89,6 +74,9 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
                 mmSelected = false;
                 mmClicked = false;
             }
+
+            console.log("canvas X: " + canX + " canvasY: " +canY);
+            console.log("Element X: " + tPos.x + "Element Y: " + tPos.y);
             //CONTROLS
             tPos = controlsText.getPos();
             tWidth = controlsText.getWidth();
@@ -105,23 +93,6 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             else {
                 cSelected = false;
                 cClicked = false;
-            }
-            //HIGH SCORE
-            tPos = highScoresText.getPos();
-            tWidth = highScoresText.getWidth();
-            tHeight = highScoresText.getHeight();
-            if (canY > (tPos.y - tHeight) && canY < (tPos.y + tHeight)) {
-                if (canX > tPos.x - (tWidth / 2) && canX < tPos.x + (tWidth / 2)) {
-                    hsSelected = true;
-                }
-                else {
-                    hsSelected = false;
-                    hsClicked = false;
-                }
-            }
-            else {
-                hsSelected = false;
-                hsClicked = false;
             }
             //CREDITS
             tPos = creditsText.getPos();
@@ -151,9 +122,6 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             if (cSelected) {
                 cClicked = true;
             }
-            if (hsSelected) {
-                hsClicked = true;
-            }
             if (cdSelected) {
                 cdClicked = true;
             }
@@ -170,10 +138,9 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
             var canvas = document.getElementById('id-canvas');
 
-            newGameText.setPos(canvas.width / 2, canvas.height / 3);
-            controlsText.setPos(canvas.width / 2, ((canvas.height / 3) + ((canvas.height / 3) / 2)));
-            highScoresText.setPos(canvas.width / 2, (canvas.height / 3) + (((canvas.height / 3) / 2)) * 2);
-            creditsText.setPos(canvas.width / 2, (canvas.height / 3) + (((canvas.height / 3) / 2)) * 3);
+            newGameText.setPos(canvas.width - (canvas.width / 3), (canvas.height / 2));
+            controlsText.setPos(canvas.width - (canvas.width / 3), ((canvas.height / 2) + 150));
+            creditsText.setPos(canvas.width - (canvas.width / 3), ((canvas.height / 2) + 150 * 2));
 
             mouse.update(elapsedTime);
             //-----------------------------
@@ -181,39 +148,30 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             //-----------------------------
             //NEW GAME
             if (mmSelected === true) {
-                mmColor = 'lightgreen';
-                newGameText.setColor('darkgreen');
+                mmColor = 'yellow';
+                newGameText.setColor('white');
             }
             else {
-                mmColor = 'green';
-                newGameText.setColor('lightgreen');
+                mmColor = 'yellow';
+                newGameText.setColor('black');
             }
             //CONTROLS
             if (cSelected === true) {
-                cColor = 'lightgreen';
-                controlsText.setColor('darkgreen');
+                cColor = 'yellow';
+                controlsText.setColor('white');
             }
             else {
-                cColor = 'green';
-                controlsText.setColor('lightgreen');
-            }
-            //HIGH SCORES
-            if (hsSelected === true) {
-                hsColor = 'lightgreen';
-                highScoresText.setColor('darkgreen');
-            }
-            else {
-                hsColor = 'green';
-                highScoresText.setColor('lightgreen');
+                cColor = 'yellow';
+                controlsText.setColor('black');
             }
             //CREDITS
             if (cdSelected === true) {
-                cdColor = 'lightgreen';
-                creditsText.setColor('darkgreen');
+                cdColor = 'yellow';
+                creditsText.setColor('white');
             }
             else {
-                cdColor = 'green';
-                creditsText.setColor('lightgreen');
+                cdColor = 'yellow';
+                creditsText.setColor('black');
             }
 
             //-----------------------------
@@ -234,13 +192,6 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
                 cClicked = false;
                 cSelected = false;
             }
-            else if (hsClicked === true) {
-                gameStack[gameStack.length] = MYGAME.menus['HighScoresMenuState'].Menu();
-                gameStack[gameStack.length - 1].initialize();
-
-                hsClicked = false;
-                hsSelected = false;
-            }
             else if (cdClicked === true) {
                 gameStack[gameStack.length] = MYGAME.menus['CreditsMenuState'].Menu();
                 gameStack[gameStack.length - 1].initialize();
@@ -256,11 +207,7 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             graphics.clear();
 
             //Draw main background
-            var google_tile = "http://maps.google.com/maps/api/staticmap?sensor=false&center=-34.397,150.644&zoom=8&size=300x400"
-            var imageObj = new Image();
-            imageObj.src = google_tile;
-            
-            graphics.background(imageObj);
+            graphics.background('media/mainMenuBg.png');
 
             //-------------------------------------------------------
             //  Draw Menu buttons
@@ -271,28 +218,23 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             tHeight = newGameText.getHeight();
             tPos = newGameText.getPos();
 
-            graphics.roundRect(tPos.x - (tWidth / 2) - 10, tPos.y - tHeight, tWidth + 20, tHeight * 2, 20, 'darkgreen', mmColor, 6);
+            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', mmColor, 3);
             newGameText.draw();
+            
             //Controls
             tWidth = controlsText.getWidth();
             tHeight = controlsText.getHeight();
             tPos = controlsText.getPos();
 
-            graphics.roundRect(tPos.x - (tWidth / 2) - 10, tPos.y - tHeight, tWidth + 20, tHeight * 2, 20, 'darkgreen', cColor, 6);
+            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', cColor, 3);
             controlsText.draw();
-            //High Scores
-            tWidth = highScoresText.getWidth();
-            tHeight = highScoresText.getHeight();
-            tPos = highScoresText.getPos();
 
-            graphics.roundRect(tPos.x - (tWidth / 2) - 10, tPos.y - tHeight, tWidth + 20, tHeight * 2, 20, 'darkgreen', hsColor, 6);
-            highScoresText.draw();
             //Credits
             tWidth = creditsText.getWidth();
             tHeight = creditsText.getHeight();
             tPos = creditsText.getPos();
 
-            graphics.roundRect(tPos.x - (tWidth / 2) - 10, tPos.y - tHeight, tWidth + 20, tHeight * 2, 20, 'darkgreen', cdColor, 6);
+            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', cdColor, 3);
             creditsText.draw();
         };
 
