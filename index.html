@@ -7,12 +7,15 @@
 	<link rel="stylesheet" type="text/css" href= "styles/main_styles.css">
 	<script src= "scripts/modernizr.js"></script>
 	<script src= "scripts/loader.js"></script>
+	<script src= "scripts/location.js"></script>
 	
 </head>
 
 <body>
     <div id="gameArea">
-
+    	<div>
+        	<button onclick="initiate_geolocation()" id="findLocationBtn" >Draw My Location on Google Map</button>
+      	</div>
     	<div id="map"></div>
         <canvas id = "id-canvas" width = "1000" height = "1000"></canvas>
     </div>

@@ -50,6 +50,7 @@ window.addEventListener('load', function() {
                 'preload!scripts/controlsMenu.js',
                 'preload!scripts/highScoresMenu.js',
                 'preload!scripts/creditsMenu.js',
+                'preload!scripts/jquery.js',
 				'preload!scripts/game.js'
 			],
 			complete : function() {
