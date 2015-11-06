@@ -4,9 +4,6 @@ MYGAME.game = (function(input,menu, gameStack) {
 
     console.log("initializing game!");
 
-    window.addEventListener('resize', MYGAME.canvasSize.resizeGame, false);
-    window.addEventListener('orientationchange', MYGAME.canvasSize.resizeGame, false);
-
     var mouse = input.Mouse(),
         keyboard = input.Keyboard(),
         elapsedTime = 0,
@@ -53,7 +50,6 @@ MYGAME.game = (function(input,menu, gameStack) {
         gameStack[gameStack.length] = menu['MainMenuState'].Menu();
         gameStack[gameStack.length-1].initialize();
 
-        MYGAME.canvasSize.resizeGame();
         requestAnimationFrame(gameLoop);
 
     }
