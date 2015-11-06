@@ -211,9 +211,14 @@ MYGAME.graphics = (function() {
     //
     //---------------------------------------------------
 	function background(image) {
+		var google_tile = "http://maps.google.com/maps/api/staticmap?sensor=false&center=-34.397,150.644&zoom=8&size=300x400"
+		var imageObj = new Image();
+		imageObj.src = google_tile;
 
+		var map;
 	    context.save();
-	    context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
+	    context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+	    // context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
 	    context.restore();
 
 	}
