@@ -38,8 +38,7 @@ window.addEventListener('load', function() {
 	Modernizr.load([
 		{
 			load : [
-                'preload!media/midTerm.png',
-                'preload!media/midTermB.png',
+                'preload!media/mainMenuBg.png',
                 'preload!scripts/soundPlayer.js',
 				//'preload!media/sounds/arcadeSound.' + MYGAME.audioExt,
                 'preload!scripts/renderer.js',
