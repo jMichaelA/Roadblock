@@ -19,3 +19,22 @@ body
     left: 0px;
     top: 0px;
 }
+
+#main_menu {
+    display: block;
+    left: 51%;
+    position: absolute;
+    top: 43%;
+    width: 30%;
+}
+
+.mm_button {
+    background: #ffff00 none repeat scroll 0 0;
+    border: 2px solid #000;
+    color: #000;
+    display: block;
+    font-size: 20px;
+    margin: 20px 0;
+    padding: 20px;
+    width: 100%;
+}
