@@ -97,6 +97,8 @@ yepnope.addPrefix('preload', function(resource) {
 			}
 			console.log('Preloading complete!');
 			MYGAME.game.initialize();
+			$('#blackout').hide();
+			$('#main_menu').show();
 		}
 	};
 	
