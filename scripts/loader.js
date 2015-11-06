@@ -43,7 +43,6 @@ window.addEventListener('load', function() {
                 'preload!scripts/soundPlayer.js',
 				//'preload!media/sounds/arcadeSound.' + MYGAME.audioExt,
                 'preload!scripts/renderer.js',
-                'preload!scripts/canvasSize.js',
                 'preload!scripts/Input.js',
                 'preload!scripts/mainMenu.js',
                 'preload!scripts/gamePlay.js',
