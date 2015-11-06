@@ -39,6 +39,9 @@ window.addEventListener('load', function() {
 		{
 			load : [
                 'preload!media/mainMenuBg.png',
+				'preload!media/WalkF_1.png',
+				'preload!media/WalkF_2.png',
+				'preload!media/WalkF_3.png',
                 'preload!scripts/soundPlayer.js',
 				//'preload!media/sounds/arcadeSound.' + MYGAME.audioExt,
                 'preload!scripts/renderer.js',

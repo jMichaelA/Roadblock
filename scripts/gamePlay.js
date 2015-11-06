@@ -7,44 +7,15 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         },
 
             //--------------------------------
-            //  Game Boards
+            //  PERSON OBJECTS
             //--------------------------------
-            board1 = graphics.Board({
-                color: 'tan',
-                lineColor: 'black',
-                lineW: 2,
-                x: (graphics.canvas.width / 10),
-                y: (graphics.canvas.height / 8),
-                w: (graphics.canvas.width / 2) - (graphics.canvas.width / 10),
-                h: (graphics.canvas.width / 2) - (graphics.canvas.width / 10)
-            }),
-            board2 = graphics.Board({
-                color: 'tan',
-                lineColor: 'black',
-                lineW: 2,
-                x: (graphics.canvas.width / 10) + ((graphics.canvas.width / 2) - (graphics.canvas.width / 10)),
-                y: (graphics.canvas.height / 8),
-                w: (graphics.canvas.width / 2) - (graphics.canvas.width / 10),
-                h: (graphics.canvas.width / 2) - (graphics.canvas.width / 10)
-            }),
-            board3 = graphics.Board({
-                color: 'tan',
-                lineColor: 'black',
-                lineW: 2,
-                x: (graphics.canvas.width / 10),
-                y: (graphics.canvas.height / 8) + (graphics.canvas.width / 2) - (graphics.canvas.width / 10),
-                w: (graphics.canvas.width / 2) - (graphics.canvas.width / 10),
-                h: (graphics.canvas.width / 2) - (graphics.canvas.width / 10)
-            }),
-            board4 = graphics.Board({
-                color: 'tan',
-                lineColor: 'black',
-                lineW: 2,
-                x: (graphics.canvas.width / 10) + ((graphics.canvas.width / 2) - (graphics.canvas.width / 10)),
-                y: (graphics.canvas.height / 8) + (graphics.canvas.width / 2) - (graphics.canvas.width / 10),
-                w: (graphics.canvas.width / 2) - (graphics.canvas.width / 10),
-                h: (graphics.canvas.width / 2) - (graphics.canvas.width / 10)
-            }),
+			person1 = graphics.Person( {
+				image : MYGAME.images['media/WalkF_2.png'],
+				x:	500, y: 500,
+				width : 23, height : 32,
+				speed : 2, //pixels per second
+			}),
+            
             //--------------------------------
             //  TEXT OBJECTS
             //--------------------------------
@@ -107,15 +78,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tHeight = 0,
             tPos = {},
 
-            b1Sel = false,
-            b1Clk = false,
-            b2Sel = false,
-            b2Clk = false,
-            b3Sel = false,
-            b3Clk = false,
-            b4Sel = false,
-            b4Clk = false,
-
             sec = 0,
             secCount = 0,
             min = 0,
@@ -134,65 +96,12 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             canX = e.clientX - gameArea.offsetLeft;
             canY = e.clientY - gameArea.offsetTop;
-            //BOARD 1
-            if (board1.detectMouse(canX, canY)) {
-                b1Sel = true;
-            }
-            else {
-                b1Sel = false;
-                b1Clk = false;
-            }
-
-            //BOARD 2
-            if (board2.detectMouse(canX, canY)) {
-                b2Sel = true;
-            }
-            else {
-                b2Sel = false;
-                b2Clk = false;
-            }
-
-            //BOARD 3
-            if (board3.detectMouse(canX, canY)) {
-                b3Sel = true;
-            }
-            else {
-                b3Sel = false;
-                b3Clk = false;
-            }
-            //BOARD 4
-            if (board4.detectMouse(canX, canY)) {
-                b4Sel = true;
-            }
-            else {
-                b4Sel = false;
-                b4Clk = false;
-            }
 
         };
 
 
         that.click = function (e) {
-            if (b1Sel === true) {
-                board1.doAction();
-                b1Clk = false;
-                currentScore++;
-            }
-            else if (b2Sel === true) {
-                board2.doAction();
-                b2Clk = false;
-                currentScore++;
-            }
-            else if (b3Sel === true) {
-                board3.doAction();
-                b3Clk = false;
-                currentScore++;
-            }
-            else if (b4Sel === true) {
-                board4.doAction();
-                b4Clk = false;
-                currentScore++;
-            }
+            
 
         };
 
@@ -213,25 +122,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
         that.update = function (elapsedTime) {
 
-            //----------------------------------------------
-            //  UPDATE BOARD POSITIONS
-            //----------------------------------------------
-            board1.setPos((graphics.canvas.width / 10), (graphics.canvas.height / 8));
-            board1.setSize((graphics.canvas.width / 2) - (graphics.canvas.width / 10), (graphics.canvas.width / 2) - (graphics.canvas.width / 10));
-
-            board2.setPos((graphics.canvas.width / 10) + ((graphics.canvas.width / 2) - (graphics.canvas.width / 10)), (graphics.canvas.height / 8));
-            board2.setSize((graphics.canvas.width / 2) - (graphics.canvas.width / 10), (graphics.canvas.width / 2) - (graphics.canvas.width / 10));
-
-            board3.setPos((graphics.canvas.width / 10), (graphics.canvas.height / 8) + (graphics.canvas.width / 2) - (graphics.canvas.width / 10));
-            board3.setSize((graphics.canvas.width / 2) - (graphics.canvas.width / 10), (graphics.canvas.width / 2) - (graphics.canvas.width / 10));
-
-            board4.setPos((graphics.canvas.width / 10) + ((graphics.canvas.width / 2) - (graphics.canvas.width / 10)), (graphics.canvas.height / 8) + (graphics.canvas.width / 2) - (graphics.canvas.width / 10));
-            board4.setSize((graphics.canvas.width / 2) - (graphics.canvas.width / 10), (graphics.canvas.width / 2) - (graphics.canvas.width / 10));
-
             //UPDATE MOUSE
             mouse.update(elapsedTime);
 
-
+			//----------------------------------------------
+            //  UPDATE PERSON POSITION
+            //----------------------------------------------
+			
             //----------------------------------------------
             //  UPDATE TEXT POSITIONS
             //----------------------------------------------
@@ -311,15 +208,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             {
                 graphics.background(null, position.coords.latitude, position.coords.longitude)
             }
+			
+			//--------------------------------
+            //  DRAW PERSON
+            //--------------------------------
 
-            
-
-            //Draw Game Board(s)
-            board1.draw();
-            board2.draw();
-            board3.draw();
-            board4.draw();
-
+			person1.draw();
+			
             //Draw Info Box
             graphics.roundRect((graphics.canvas.width / 10), (graphics.canvas.height / 4) * 3, graphics.canvas.width - (graphics.canvas.width / 10) * 2, (graphics.canvas.height / 4.5), 20, 'darkgreen', 'lightgreen', 4);
 
