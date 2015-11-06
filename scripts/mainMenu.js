@@ -5,49 +5,22 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
         var that = {
 
         },
-        newGameText = graphics.Text({
-            font: '32px Arial',
-            align: 'center',
-            textColor: 'black',
-            text: 'New Game',
-            baseLine: 'middle',
-                x: graphics.canvas.width / 2,
-                y: graphics.canvas.height / 3
-            }),
-            controlsText = graphics.Text({
-                font: '32px Arial',
-                align: 'center',
-                textColor: 'black',
-                text: 'Controls',
-                baseLine: 'middle',
-                x: graphics.canvas.width / 2,
-                y: (graphics.canvas.height / 3) + (graphics.canvas.height / 3) / 2
-            }),
-            creditsText = graphics.Text({
-                font: '32px Arial',
-                align: 'center',
-                textColor: 'black',
-                text: 'Credits',
-                baseLine: 'middle',
-                x: graphics.canvas.width / 2,
-                y: (graphics.canvas.height / 3) + ((graphics.canvas.height / 3) / 2) * 3
-            }),
-            tWidth = 0,
-            tHeight = 0,
-            tPos = {},
-            mmSelected = false,
-            mmClicked = false,
-            mmColor = 'black',
-            cSelected = false,
-            cClicked = false,
-            cColor = 'black',
-            cdSelected = false,
-            cdClicked = false,
-            cdColor = 'black',
+        tWidth = 0,
+        tHeight = 0,
+		tPos = {},
+		mmSelected = false,
+		mmClicked = false,
+		mmColor = 'black',
+		cSelected = false,
+		cClicked = false,
+		cColor = 'black',
+		cdSelected = false,
+		cdClicked = false,
+		cdColor = 'black',
 
-            mouse = input.Mouse();
+        mouse = input.Mouse();
 
-
+/*
         that.mouseOver = function (e) {
 
             var canX = 0,
@@ -114,8 +87,8 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             }
 
         };
-
-
+*/
+	/*
         that.click = function (e) {
             if (mmSelected) {
                 mmClicked = true;
@@ -127,10 +100,11 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
                 cdClicked = true;
             }
         };
+	*/
 
         that.initialize = function () {
-            mouse.registerCommand('mousemove', that.mouseOver);
-            mouse.registerCommand('mousedown', that.click);
+            //mouse.registerCommand('mousemove', that.mouseOver);
+            //mouse.registerCommand('mousedown', that.click);
 
         }
 
@@ -139,41 +113,14 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
             var canvas = document.getElementById('id-canvas');
 
+			/*
             newGameText.setPos(canvas.width - (canvas.width / 3), (canvas.height / 2));
             controlsText.setPos(canvas.width - (canvas.width / 3), ((canvas.height / 2) + 150));
             creditsText.setPos(canvas.width - (canvas.width / 3), ((canvas.height / 2) + 150 * 2));
-
+			*/
+			
             mouse.update(elapsedTime);
-            //-----------------------------
-            //  IF SELECTED
-            //-----------------------------
-            //NEW GAME
-            if (mmSelected === true) {
-                mmColor = 'yellow';
-                newGameText.setColor('white');
-            }
-            else {
-                mmColor = 'yellow';
-                newGameText.setColor('black');
-            }
-            //CONTROLS
-            if (cSelected === true) {
-                cColor = 'yellow';
-                controlsText.setColor('white');
-            }
-            else {
-                cColor = 'yellow';
-                controlsText.setColor('black');
-            }
-            //CREDITS
-            if (cdSelected === true) {
-                cdColor = 'yellow';
-                creditsText.setColor('white');
-            }
-            else {
-                cdColor = 'yellow';
-                creditsText.setColor('black');
-            }
+            
 
             //-----------------------------
             //  IF CLICKED
@@ -211,33 +158,6 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             graphics.background('media/mainMenuBg.png');
             // graphics.background(null, 41.7418972, -111.8113987)
 
-            //-------------------------------------------------------
-            //  Draw Menu buttons
-            //-------------------------------------------------------
-
-            //New Game
-            tWidth = newGameText.getWidth();
-            tHeight = newGameText.getHeight();
-            tPos = newGameText.getPos();
-
-            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', mmColor, 3);
-            newGameText.draw();
-            
-            //Controls
-            tWidth = controlsText.getWidth();
-            tHeight = controlsText.getHeight();
-            tPos = controlsText.getPos();
-
-            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', cColor, 3);
-            controlsText.draw();
-
-            //Credits
-            tWidth = creditsText.getWidth();
-            tHeight = creditsText.getHeight();
-            tPos = creditsText.getPos();
-
-            graphics.roundRect(tPos.x - 150, tPos.y - tHeight * 2, 300, tHeight * 4, 20, 'black', cdColor, 3);
-            creditsText.draw();
         };
 
 
