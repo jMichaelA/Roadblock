@@ -288,15 +288,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         };
 
         that.render = function () {
-
-            //Draw main background
             
+            //get location
             navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
-            
-            function handle_errors(error)
-            {
-                switch(error.code)
-                {
+            console.log('gasp');
+            function handle_errors(error){
+                console.log('gasp1');
+                switch(error.code){
                     case error.PERMISSION_DENIED: alert("user did not share geolocation data");
                     break;
                     case error.POSITION_UNAVAILABLE: alert("could not detect current position");
@@ -307,12 +305,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                     break;
                 }
             }
-            function handle_geolocation_query(position)
-            {
+            function handle_geolocation_query(position){
+                //Draw main background
+                console.log(position);
                 graphics.background(null, position.coords.latitude, position.coords.longitude)
             }
-
-            
 
             //Draw Game Board(s)
             board1.draw();
