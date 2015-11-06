@@ -1,0 +1,28 @@
+/*667 h 1366 w*/
+
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+#id-canvas 
+{
+   /* background-image: url("media/Tetris.png"); */
+    height: 100%;
+    width: 100%;
+    border: 2px solid black;
+
+}
+
+#gameArea 
+{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+#map {
+        height: 100%;
+        color: #ff0000;
+      }
