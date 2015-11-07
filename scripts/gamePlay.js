@@ -18,11 +18,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             hud = graphics.HUD({
                 x:0,
-                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                y: graphics.canvas.height - 60,
                 width:graphics.canvas.width,
-                height: graphics.canvas.width / 11,
+                height: 60,
                 levelX: 10,
-                levelY: graphics.canvas.height - (graphics.canvas.height / 25),
+                levelY: graphics.canvas.height - 30,
                 level: 1
             });
 
@@ -30,15 +30,19 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //  HUD Element
             //--------------------------------
             hud_stop = graphics.HUD_Element({
-                x: 150 + 25,
-                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                x: 200,
+                y: graphics.canvas.height - 30,
+                width:50,
+                height:50,
                 image: MYGAME.images['media/StopSign.png'],
                 count: 1
             });
 
             hud_detour = graphics.HUD_Element({
-                x: hud_stop.getWidth() + 25,
-                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                x: 350,
+                y: graphics.canvas.height - 30,
+                width:50,
+                height:50,
                 image: MYGAME.images['media/Detour.png'],
                 count: 1
             });
@@ -52,7 +56,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	500, y:300 ,
-				width : 46, height : 64,
+				width : 34, height : 48,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
@@ -66,7 +70,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	200, y:300 ,
-				width : 46, height : 64,
+				width : 34, height : 48,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
@@ -81,7 +85,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			car1 = graphics.Car( {
 				image : MYGAME.images['media/car.png'],
 				x:	700, y: 200 ,
-				width : 128, height : 64,
+				width : 96, height : 48,
 				speed : 60,	//pixels per second
 				rotation: 0,
 			}),
@@ -112,12 +116,17 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             var canX = 0,
                 canY = 0,
-				gameAreaJ = $("#gameArea");
+				gameArea = document.getElementById('gameArea');
+				gameAreaJ = $("#gameArea"),
+				gameWidth = gameAreaJ.width(),
+				gameHeight = gameAreaJ.height();
 
-            canX = e.clientX - gameArea.offsetLeft - gameAreaJ.width()*0.0155;
-            canY = e.clientY - gameArea.offsetTop + gameAreaJ.height()*0.0809;
+			canX = e.clientX - gameArea.offsetLeft + document.documentElement.scrollLeft;
+			canY = e.clientY - gameArea.offsetTop + document.documentElement.scrollTop;	
 			
 			person2.detectMouse(canX, canY);
+            hud_stop.detectMouse(canX, canY);
+            hud_detour.detectMouse(canX, canY);
 
         };
 
@@ -129,6 +138,24 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			if(person2.isClk()){
 				person2.setDeath(true);
 			}
+
+            if(hud_stop.isClk()){
+                if(!hud_stop.getPlacing()){
+                    hud_detour.setPlacing(false);
+                    hud_stop.setPlacing(true);
+                }else{
+                    hud_stop.setPlacing(false);
+                }
+            }
+
+            if(hud_detour.isClk()){
+                if(!hud_detour.getPlacing()){
+                    hud_stop.setPlacing(false);
+                    hud_detour.setPlacing(true);
+                }else{
+                    hud_detour.setPlacing(false);
+                }
+            }
         };
 		
 		//--------------------------------
@@ -230,9 +257,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             map.draw();
 			person1.draw();
-			if(!person2.getDeath()){
+		/*	if(!person2.getDeath()){
 				person2.draw();
-			}
+			}*/
 			car1.draw();
 			hud.draw();
             hud_stop.draw();
