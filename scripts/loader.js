@@ -65,7 +65,8 @@ window.addEventListener('load', function() {
                 'preload!scripts/highScoresMenu.js',
                 'preload!scripts/creditsMenu.js',
                 'preload!scripts/jquery.js',
-				'preload!scripts/game.js'
+				'preload!scripts/game.js',
+				'preload!scripts/invisiMap.js'
 			],
 			complete : function() {
 				console.log('All files requested for loading...');

@@ -8,6 +8,11 @@
 	<script src= "scripts/modernizr.js"></script>
 	<script src= "scripts/loader.js"></script>
 	<script src= "scripts/location.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?libraries=drawing,places"></script>
+  	
 	
 </head>
 
@@ -22,10 +27,15 @@
 	    </div>
     </div>
 
+    <div id="bar">
+      <p class="auto"><input type="text" id="autoc"/></p>
+      <p><a id="clear" href="#">Click here</a> to clear map.</p>
+    </div>
 
     <div id='blackout'>
     	<img id='loading' src='media/loading.GIF' />
     </div>
+    <div id='postage'></div>
 
 <!--
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9-sOEES1LmBR83pxuLoJzsKWBqXZCa5k"

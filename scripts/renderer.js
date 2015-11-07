@@ -624,21 +624,32 @@ function getRoadLatLongs(lat,longitude){
 			longitude=globalPosition.coords.longitude;
 		}
 	}
+	  var coordinates = [
+	    {lat: lat-.001, lng: longitude},
+	    {lat: lat+.001, lng: longitude},
+	    {lat: lat, lng: longitude-.001},
+	    {lat: lat, lng: longitude+.001},
+	    {lat: lat-.001, lng: longitude-.001},
+	    {lat: lat+.001, lng: longitude+.001},
+	    {lat: lat-.001, lng: longitude-.001},
+	    {lat: lat+.001, lng: longitude+.001}
+	  ];
 
-	$.ajax({
-	  type:     "GET",
-	  url:      "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + longitude-.009 + "&sensor=true_or_false",
-	  dataType: "json",
-	  async:   false, 
-	  success: function(data){
-	  	window.globalGeolocation = data;
-	  }
-	});
+	  initializeMap(coordinates);
+	// $.ajax({
+	//   type:     "GET",
+	//   url:      "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + longitude-.009 + "&sensor=true_or_false",
+	//   dataType: "json",
+	//   async:   false, 
+	//   success: function(data){
+	//   	window.globalGeolocation = data;
+	//   }
+	// });
 }
 
 function getGoogleMap(lat, longitude){
 	var markers = "";
-	console.log(window.globalGeolocation.results);
+	console.log(MYGAME.path);
 
 	for(var i in window.globalGeolocation.results) {
 		markers += "&markers=color:red%7Clabel:" + i + "%7C" + window.globalGeolocation.results[i].geometry.bounds.northeast.lat
@@ -646,12 +657,11 @@ function getGoogleMap(lat, longitude){
 		 "&markers=color:blue%7Clabel:" + i + "%7C" + window.globalGeolocation.results[i].geometry.bounds.southwest.lat + "," +
 		 window.globalGeolocation.results[i].geometry.bounds.southwest.lng;
 	}
-	console.log(markers);
-	longitude += -.009;
+	// console.log(markers);
 	var canvas = document.getElementById('id-canvas');
     var image_source = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + lat + "," +
                     longitude + "&zoom=10&size="+canvas.width+"x"+
                     canvas.height+ markers + "&style=feature:road|element:geometry|weight:5.5|color:black|lightness:100&style=element:geometry.stroke|visibility:off&style=feature:landscape|element:geometry|saturation:-100&style=feature:water|saturation:-100|invert_lightness:true?key=AIzaSyB9-sOEES1LmBR83pxuLoJzsKWBqXZCa5k";
-                    console.log(image_source);
+                    // console.log(image_source);
     return image_source;
 }
