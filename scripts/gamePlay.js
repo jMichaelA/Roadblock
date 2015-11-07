@@ -11,9 +11,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
 			person1 = graphics.Person( {
 				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png']],
-				x:	500, y: 500,
-				width : 23, height : 32,
-				speed : 2, //pixels per second
+				x:	500, y:300 ,
+				width : 46, height : 64,
+				speed : 15,	//pixels per second
+				iter: 0,
+				imgTime: 0,
 			}),
             
             //--------------------------------
@@ -148,6 +150,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			//----------------------------------------------
             //  UPDATE PERSON POSITION
             //----------------------------------------------
+			person1.goDown(elapsedTime);
 			
             //----------------------------------------------
             //  UPDATE TEXT POSITIONS
@@ -206,8 +209,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
         that.render = function () {
 
-            //Draw main background
-            
+            //Clear Canvas
+			graphics.clear();
+			
+			//Draw main background
+			
 			//--------------------------------
             //  DRAW PERSON
             //--------------------------------
