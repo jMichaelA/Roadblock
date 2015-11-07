@@ -27,7 +27,10 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //  PERSON OBJECTS
             //--------------------------------
 			person1 = graphics.Person( {
-				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png']],
+				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png'],
+						MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_1.png'],MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_3.png'],	
+						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
+						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	500, y:300 ,
 				width : 46, height : 64,
 				speed : 15,	//pixels per second
@@ -102,6 +105,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             sec = 0,
             secCount = 0,
             min = 0,
+			tempTime = 0,
 
             currentScore = 0,
             level = 1,
@@ -169,7 +173,23 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			//----------------------------------------------
             //  UPDATE PERSON POSITION
             //----------------------------------------------
-			person1.goDown(elapsedTime);
+			tempTime += elapsedTime;
+			
+			if(tempTime <= 5){
+				person1.goDown(elapsedTime);
+			}
+			else if(tempTime > 5 && tempTime <= 10){
+				person1.goRight(elapsedTime);
+			}
+			else if(tempTime > 10 && tempTime <= 15){
+				person1.goUp(elapsedTime);
+			}
+			else if(tempTime > 15 && tempTime <= 20){
+				person1.goLeft(elapsedTime);
+			}
+			else{
+				tempTime = 0;
+			}
 			
             //----------------------------------------------
             //  UPDATE TEXT POSITIONS

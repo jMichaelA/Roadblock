@@ -44,15 +44,26 @@ MYGAME.graphics = (function() {
 	        spec.x = x;
 	        spec.y = y;
 	    };
-
-	    that.goUp = function (){
 		
+		that.setIter = function (iter) {
+			spec.iter = iter;
+		};
+
+	    that.goUp = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.3){
+				spec.iter = ((spec.iter+1)%4)+4;
+				spec.imgTime = 0;
+			}
+			
+			spec.y += spec.speed * elapsedTime * -1;
 		};
 		
 		that.goDown = function (elapsedTime){
 			spec.imgTime += elapsedTime;
 			
-			if(spec.imgTime > 0.5){
+			if(spec.imgTime > 0.3){
 				spec.iter = (spec.iter+1)%4;
 				spec.imgTime = 0;
 			}
@@ -60,12 +71,26 @@ MYGAME.graphics = (function() {
 			spec.y += spec.speed * elapsedTime * 1; 
 		};
 		
-		that.goLeft = function (){
-		
+		that.goLeft = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.3){
+				spec.iter = ((spec.iter+1)%4)+8;
+				spec.imgTime = 0;
+			}
+			
+			spec.x += spec.speed * elapsedTime * -1;
 		};
 		
-		that.goRight = function (){
-		
+		that.goRight = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.3){
+				spec.iter = ((spec.iter+1)%4)+12;
+				spec.imgTime = 0;
+			}
+			
+			spec.x += spec.speed * elapsedTime * 1;
 		};
 
 	    that.draw = function() {
