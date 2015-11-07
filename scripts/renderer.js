@@ -476,7 +476,9 @@ function handle_errors(error){
 function handle_geolocation_query(position){
 	var canvas = document.getElementById('id-canvas');
     var image_source = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +
-                    position.coords.longitude + "&zoom=17&size="+canvas.width+"x"+canvas.height;
+                    position.coords.longitude + "&zoom=18&size="+canvas.width+"x"+
+                    canvas.height+"&style=&style=feature:road|element:geometry|weight:5.5|color:black|lightness:100&style=element:geometry.stroke|visibility:off&style=feature:landscape|element:geometry|saturation:-100&style=feature:water|saturation:-100|invert_lightness:true?key=AIzaSyB9-sOEES1LmBR83pxuLoJzsKWBqXZCa5k";
+
     var imageObj = new Image();
     imageObj.src = image_source;
     mapImage = imageObj;
