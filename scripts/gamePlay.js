@@ -8,7 +8,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             //--------------------------------
             //  map object
-            //--------------------------------            
+            //--------------------------------  
             map = graphics.map( {
                 x:  graphics.canvas.width/2, 
                 y: graphics.canvas.height/2,
@@ -107,7 +107,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         //  CLICK FUNCTION
         //--------------------------------
         that.click = function (e) {
-            
 
         };
 		
