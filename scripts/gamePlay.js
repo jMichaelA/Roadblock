@@ -7,16 +7,30 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         },
 
             //--------------------------------
+            //  HUD Object
+            //--------------------------------
+            hud = graphics.HUD({
+                x:0,
+                y:graphics.canvas.height - 75,
+                width:graphics.canvas.width,
+                height:75,
+                levelX: 5,
+                levelY: 0
+            });
+
+            //--------------------------------
             //  PERSON OBJECTS
             //--------------------------------
 			person1 = graphics.Person( {
 				image : MYGAME.images['media/WalkF_2.png'],
 				x:	500, y: 500,
-				width : 23, height : 32,
+				width : 46, height : 64,
 				speed : 2, //pixels per second
 			}),
             
-            //--------------------------------
+
+
+            /*//--------------------------------
             //  TEXT OBJECTS
             //--------------------------------
             scoreText = graphics.Text({
@@ -73,7 +87,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 x: (graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)),
                 y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
             }),
-
+*/
             tWidth = 0,
             tHeight = 0,
             tPos = {},
@@ -152,7 +166,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //----------------------------------------------
             //  UPDATE TEXT POSITIONS
             //----------------------------------------------
-            scoreText.setPos((graphics.canvas.width / 10) * 1.5, ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
+            /*scoreText.setPos((graphics.canvas.width / 10) * 1.5, ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
             scoreDisplay.setPos((graphics.canvas.width / 10) * 4.6, ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
 
             timeText.setPos((graphics.canvas.width / 10) * 1.5, ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2));
@@ -163,12 +177,12 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tPos = levelText.getPos();
             levelText.setPos((graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)), ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
             levelDisplay.setPos(tPos.x + tWidth / 2, tPos.y + tHeight + (tHeight / 1.5))
-
+*/
             //----------------------------------------------
             //  UPDATE VALUES
             //----------------------------------------------
             //Update Score
-            scoreDisplay.setText(currentScore);
+            /*scoreDisplay.setText(currentScore);
 
             //Update Game Time
             secCount += (elapsedTime / 1000);
@@ -190,7 +204,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             //Update Level
             levelDisplay.setText(level);
-
+*/
 
             //Check for GAME OVER
             if (min > 0) {
@@ -213,15 +227,16 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
 
 			person1.draw();
-			
+			hud.draw();
+
             //Draw Info Box
-            graphics.roundRect((graphics.canvas.width / 10), (graphics.canvas.height / 4) * 3, graphics.canvas.width - (graphics.canvas.width / 10) * 2, (graphics.canvas.height / 4.5), 20, 'darkgreen', 'lightgreen', 4);
+            //graphics.roundRect((graphics.canvas.width / 10), (graphics.canvas.height / 4) * 3, graphics.canvas.width - (graphics.canvas.width / 10) * 2, (graphics.canvas.height / 4.5), 20, 'darkgreen', 'lightgreen', 4);
 
             //Draw Info Text
             //--------------------------------
             //  SCORE
             //--------------------------------
-            tWidth = scoreText.getWidth();
+/*            tWidth = scoreText.getWidth();
             tHeight = scoreText.getHeight();
             tPos = scoreText.getPos();
             graphics.roundRect(tPos.x + tWidth + (tWidth / 4), tPos.y - tHeight / 1.5, tWidth * 1.5, tHeight * 1.5, 10, 'darkgreen', 'darkgreen', 1);
@@ -244,7 +259,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tPos = levelText.getPos();
             graphics.roundRect(tPos.x - tWidth / 4, tPos.y + tHeight, tWidth * 1.5, tHeight * 1.5, 10, 'darkgreen', 'darkgreen', 1);
             levelText.draw();
-            levelDisplay.draw();
+            levelDisplay.draw();*/
 
 
         };

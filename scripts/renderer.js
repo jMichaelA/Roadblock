@@ -76,6 +76,89 @@ MYGAME.graphics = (function() {
 	    return that;
 	}
 
+	//---------------------------------------------------
+	//
+	//	Hud Factory Function
+	//
+	//---------------------------------------------------
+
+	function HUD(spec){
+		var that = {};
+
+		that.setPos = function(x, y){
+			spec.x = x;
+			spec.y = y;
+		};
+
+		that.getPos = function(){
+			return {
+				x: spec.x,
+				y: spec.y
+			};
+		};
+
+		that.setWidth = function(width){
+			spec.width = width;
+		};
+
+		that.getWidth = function(){
+			return spec.width;
+		};
+
+		that.setHeight = function(height){
+			spec.height = height;
+		};
+
+		that.getHeight = function(){
+			return spec.height;
+		};
+
+		that.draw = function () {
+	        context.save();
+	        context.strokeStyle = 'black';
+	        context.lineWidth = 3;
+	        context.fillStyle = "#bbb";
+	        context.rect(spec.x,spec.y,spec.width,spec.height); 
+	    	context.stroke();
+	    	context.fill();
+	        context.restore();
+	    };
+
+		return that;
+	}
+
+	//---------------------------------------------------
+	//
+	//	HUD Element
+	//
+	//---------------------------------------------------
+
+	function HUD_Element(spec){
+		var that = {};
+
+		that.setPos = function(x, y){
+			spec.x = x;
+			spec.y = y;
+		}
+
+		that.getPos = function(){
+			return {
+				x: spec.x,
+				y: spec.y
+			};
+		}
+
+		that.getWidth = function(){
+			return spec.width;
+		}
+
+		that.getHeight = function(){
+			return spec.height;
+		}
+
+		return that;
+	}
+
 
     //---------------------------------------------------
     //
@@ -250,6 +333,7 @@ MYGAME.graphics = (function() {
 	    Texture: Texture,
 	    Text: Text,
 	    Person: Person,
+	    HUD: HUD,
         background: background,
 	    roundRect: roundRect,
 	    canvas: canvas,
