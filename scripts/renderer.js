@@ -474,11 +474,10 @@ function handle_errors(error){
 }
 
 function handle_geolocation_query(position){
+	var canvas = document.getElementById('id-canvas');
     var image_source = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +
-                    position.coords.longitude + "&zoom=14&size=300x400&markers=color:blue|label:U|" +
-                    position.coords.latitude + ',' + position.coords.longitude;
+                    position.coords.longitude + "&zoom=17&size="+canvas.width+"x"+canvas.height;
     var imageObj = new Image();
     imageObj.src = image_source;
     mapImage = imageObj;
-    console.log(position);
 }
