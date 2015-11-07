@@ -34,10 +34,10 @@ MYGAME.graphics = (function() {
 
     //---------------------------------------------------
     //
-    //  Game Board Factory Function
+    //  Person Factory Function
     //
     //---------------------------------------------------
-	function Board(spec) {
+	function Person(spec) {
 	    var that = {};
 
 	    that.setPos = function (x, y) {
@@ -45,45 +45,33 @@ MYGAME.graphics = (function() {
 	        spec.y = y;
 	    };
 
-	    that.setSize = function (w, h) {
-	        spec.w = w;
-	        spec.h = h;
-	    };
+	    that.goUp = function (){
+		
+		};
+		
+		that.goDown = function (){
+		
+		};
+		
+		that.goLeft = function (){
+		
+		};
+		
+		that.goRight = function (){
+		
+		};
 
-	    that.doAction = function (){
-	        spec.color = 'red';
-	    };
-
-	    that.detectMouse = function(x,y){
-	        var mouseOverF = false;
-
-	        if (y > (spec.y) && y < (spec.y + spec.h)) {
-	            if (x > (spec.x)  && x < (spec.x + spec.w)) {
-	                mouseOverF = true;
-	                spec.color = 'brown';
-	            }
-	            else{
-	                spec.color = 'tan';
-	            }
-	        }
-	        else{
-	            spec.color = 'tan';
-	        }
-            
-	        return mouseOverF;
-	    };
-
-	    that.draw = function () {
-	        context.save();
-
-	        context.fillStyle = spec.color;
-	        context.strokeStyle = spec.lineColor;
-	        context.lineWidth = spec.lineW;
-	        context.fillRect(spec.x, spec.y, spec.w, spec.h);
-	        context.strokeRect(spec.x, spec.y, spec.w, spec.h);
-                
-	        context.restore();
-	    };
+	    that.draw = function() {
+			context.save();
+			
+			context.drawImage(
+				spec.image,
+				spec.x - spec.width/2, 
+				spec.y - spec.height/2,
+				spec.width, spec.height);
+			
+			context.restore();
+		};
 
 	    return that;
 	}
@@ -261,7 +249,7 @@ MYGAME.graphics = (function() {
 	    clear: clear,
 	    Texture: Texture,
 	    Text: Text,
-	    Board: Board,
+	    Person: Person,
         background: background,
 	    roundRect: roundRect,
 	    canvas: canvas,
