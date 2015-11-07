@@ -39,6 +39,7 @@ window.addEventListener('load', function() {
 		{
 			load : [
                 'preload!media/mainMenuBg.png',
+                'preload!media/gameOver.png',
 				'preload!media/WalkF_1.png',
 				'preload!media/WalkF_2.png',
 				'preload!media/WalkF_3.png',

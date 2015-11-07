@@ -8,7 +8,7 @@ MYGAME.menus['GameOverState'] = (function (graphics, input, gameStack) {
             gameOverText = graphics.Text({
                 font: '36px Arial',
                 align: 'center',
-                textColor: 'lightgreen',
+                textColor: 'white',
                 text: 'Game Over',
                 baseLine: 'middle',
                 x: graphics.canvas.width / 2,
@@ -103,12 +103,12 @@ MYGAME.menus['GameOverState'] = (function (graphics, input, gameStack) {
             //-----------------------------
             //BACK
             if (bSelected === true) {
-                bColor = 'lightgreen';
-                backText.setColor('darkgreen');
+                bColor = 'white';
+                backText.setColor('red');
             }
             else {
-                bColor = 'green';
-                backText.setColor('lightgreen');
+                bColor = 'red';
+                backText.setColor('white');
             }
 
             //-----------------------------
@@ -129,10 +129,10 @@ MYGAME.menus['GameOverState'] = (function (graphics, input, gameStack) {
             var canvas = document.getElementById('id-canvas');
 
             //Draw main background
-            //graphics.background('media/midTerm.png');
+            graphics.background('media/gameOver.png');
 
             //Draw Menu RoundRect
-            graphics.roundRect(0, 0, canvas.width, canvas.height, 20, 'rgba(00,64,00,0.5)', 'rgba(00,64,00,0.75)');
+            //graphics.roundRect(0, 0, canvas.width, canvas.height, 20, 'rgba(00,64,00,0.5)', 'rgba(00,64,00,0.75)');
 
             //-------------------------------------------------------
             //  Draw Menu buttons
@@ -140,14 +140,14 @@ MYGAME.menus['GameOverState'] = (function (graphics, input, gameStack) {
 
             //Credit Text
             gameOverText.draw();
-            curScoreText.draw();
+            //curScoreText.draw();
 
             //Back
             tWidth = backText.getWidth();
             tHeight = backText.getHeight();
             tPos = backText.getPos();
 
-            graphics.roundRect(tPos.x - (tWidth / 2) - 10, tPos.y - tHeight, tWidth + 20, tHeight * 2, 20, 'darkgreen', bColor, 4);
+            graphics.roundRect(tPos.x - (tWidth / 2) - 10, tPos.y - tHeight, tWidth + 20, tHeight * 2, 20, 'darkred', bColor, 4);
             backText.draw();
         };
 

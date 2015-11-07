@@ -158,6 +158,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             distanceY = 0,
             carStatus = {},
             k = 0,
+            detourF = false,
+            justSet = false,
 
             sec = 0,
             secCount = 0,
@@ -359,6 +361,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                     if(distanceX <= (objPos1.radius+objPos2.radius) && distanceY <= (objPos1.radius+objPos2.radius)){
                             //Collision with Detour Sign
                             car1.setDetF(true);
+                            k = numSigns;
                             console.log("Detour Sign Detection");
                     }
                     else{
@@ -393,30 +396,46 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tempTime2 += elapsedTime;
             carStatus = car1.getFlags();
             
-            if(tempTime2 <= 5){
+            if(justSet === false){
+                detourF = carStatus.detour;
+            }
+            
+            console.log("detour: "+detourF);
+            if(tempTime2 <= 5 && detourF === false){
                 if(edgeDetect(car1.getPos().x,car1.getPos().y,car1.getPos().radius,car1.getDirection()) != 'None'){
                     car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
                 }
 
                 //edgeDetect(person1.getPos().x,person1.getPos().y);
                 if(car1.getDirection() == 1){
-                    car1.goUp(elapsedTime);
+                    
+                    car1.goUp(elapsedTime);    
                 }
 
-                if(car1.getDirection() == 2){
+                else if(car1.getDirection() == 2){
+                    
                     car1.goDown(elapsedTime);
                 }
 
-                if(car1.getDirection() == 3){
+                else if(car1.getDirection() == 3){
+                    
                     car1.goLeft(elapsedTime);
                 }
 
-                if(car1.getDirection() == 4){
+                else if(car1.getDirection() == 4){
+                    
                     car1.goRight(elapsedTime);
+                    
                 }
-            }else{
+            }
+            else if(justSet === true){
+                justSet = false;
+            }
+            else{
                 car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
                 tempTime2 = 0;
+                detourF = false;
+                justSet = true;
             }
             //Check for GAME OVER
             if (person1.isDead()) {
