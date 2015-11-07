@@ -5,7 +5,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         var that = {
             dead: false
         },
-
             //--------------------------------
             //  map object
             //--------------------------------  
@@ -14,6 +13,42 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 y: graphics.canvas.height/2,
                 width : graphics.canvas.width, height : graphics.canvas.height,
             }),
+
+            map_stop_elements = [];
+            map_detour_elements = [];
+
+            for(var i = 0; i < 10; i++){
+                if (i < 5){
+                    image = MYGAME.images['media/StopSign.png'];
+                    temp = graphics.map_element({
+                        x: 0,
+                        y: 0,
+                        width: 10,
+                        height: 10,
+                        placed: false,
+                        image: image
+                    });
+
+                    map_stop_elements.push(temp);
+                }else{
+                    image = MYGAME.images['media/Detour.png'];
+                    temp = graphics.map_element({
+                        x: 0,
+                        y: 0,
+                        width: 10,
+                        height: 10,
+                        placed: false,
+                        image: image
+                    });
+
+                    map_detour_elements.push(temp);
+                }
+            }
+
+            /*for(var i = 0; i < map_stop_elements.length; i++){
+                console.log(map_stop_elements[i]);
+            }*/
+
             //  HUD Object
             //--------------------------------
             hud = graphics.HUD({
@@ -34,8 +69,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 y: graphics.canvas.height - 30,
                 width:50,
                 height:50,
+                usedMarkers: 0,
                 image: MYGAME.images['media/StopSign.png'],
-                count: 1
+                count: map_stop_elements.length
             });
 
             hud_detour = graphics.HUD_Element({
@@ -43,8 +79,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 y: graphics.canvas.height - 30,
                 width:50,
                 height:50,
+                usedMarkers: 0,
                 image: MYGAME.images['media/Detour.png'],
-                count: 1
+                count: map_detour_elements.length
             });
 
             //--------------------------------
@@ -127,20 +164,52 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			person2.detectMouse(canX, canY);
             hud_stop.detectMouse(canX, canY);
             hud_detour.detectMouse(canX, canY);
-
         };
 
 		//--------------------------------
         //  CLICK FUNCTION
         //--------------------------------
         that.click = function (e) {
+            var canX = 0,
+                canY = 0,
+                gameArea = document.getElementById('gameArea');
+                gameAreaJ = $("#gameArea"),
+                gameWidth = gameAreaJ.width(),
+                gameHeight = gameAreaJ.height();
+
+            canX = e.clientX - gameArea.offsetLeft + document.documentElement.scrollLeft;
+            canY = e.clientY - gameArea.offsetTop + document.documentElement.scrollTop; 
+
+            console.log(canX, canY);
+
+            if(hud_stop.getPlacing()){
+                if(hud_stop.getCount() != hud_stop.getUsed()){
+                    usedMarkers = hud_stop.getUsed();                    
+                    map_stop_elements[usedMarkers].setPos(canX,canY);
+                    map_stop_elements[usedMarkers].setPlaced(true);
+                    hud_stop.setUsed(hud_stop.getUsed()+1);
+                    hud_stop.setCount(hud_stop.getCount() - 1);
+                    hud_stop.setPlacing(false);
+                }
+            }
+
+            if(hud_detour.getPlacing()){
+                if(hud_detour.getCount() != hud_detour.getUsed()){
+                    usedMarkers = hud_detour.getUsed();                    
+                    map_detour_elements[usedMarkers].setPos(canX,canY);
+                    map_detour_elements[usedMarkers].setPlaced(true);
+                    hud_detour.setUsed(usedMarkers+1);
+                    hud_detour.setCount(hud_detour.getCount() - 1);
+                    hud_detour.setPlacing(false);
+                }
+            }
 
 			if(person2.isClk()){
 				person2.setDeath(true);
 			}
 
             if(hud_stop.isClk()){
-                if(!hud_stop.getPlacing()){
+                if(!hud_stop.getPlacing() && hud_stop.getCount() != 0){
                     hud_detour.setPlacing(false);
                     hud_stop.setPlacing(true);
                 }else{
@@ -149,7 +218,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             }
 
             if(hud_detour.isClk()){
-                if(!hud_detour.getPlacing()){
+                if(!hud_detour.getPlacing() && hud_detour.getCount() != 0){
                     hud_stop.setPlacing(false);
                     hud_detour.setPlacing(true);
                 }else{
@@ -183,6 +252,15 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             //UPDATE MOUSE
             mouse.update(elapsedTime);
+
+            //Update marker position
+            for(var i = 0; i < map_stop_elements.length; i++){
+                map_stop_elements[i].draw();
+            }
+
+            for(var i = 0; i < map_detour_elements.length; i++){
+                map_detour_elements[i].draw();
+            }
 
 			//----------------------------------------------
             //  UPDATE PERSON POSITION
@@ -257,13 +335,25 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             map.draw();
 			person1.draw();
+
+            
 		/*	if(!person2.getDeath()){
 				person2.draw();
 			}*/
+            for(var i = 0; i < map_stop_elements.length; i++){
+                map_stop_elements[i].draw();
+            }
+
+            for(var i = 0; i < map_detour_elements.length; i++){
+                map_detour_elements[i].draw();
+            }
 			car1.draw();
 			hud.draw();
             hud_stop.draw();
             hud_detour.draw();
+
+                       //Update marker position
+            
         };
 
 

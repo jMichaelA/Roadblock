@@ -245,7 +245,49 @@ MYGAME.graphics = (function() {
 		};
 	    return that;
 	}
-	//
+
+	function map_element(spec){
+		var that = {};
+
+		that.setPos = function(x,y){
+			spec.x = x;
+			spec.y = y;
+		};
+
+		that.getPos = function(){
+			return {
+				x: spec.x,
+				y: spec.y
+			};
+		};
+
+		that.getPlaced = function(){
+			return spec.placed;
+		};
+
+		that.setPlaced = function(placed){
+			spec.placed = placed;
+		};
+
+		that.draw = function(){
+			context.save();
+			if(spec.placed){
+				context.drawImage(
+					spec.image, 
+					spec.x - spec.width/2, 
+					spec.y - spec.height/2, 
+					20, 
+					20
+				);
+			}
+
+			context.restore();
+		};
+
+		return that;
+	}
+
+	//---------------------------------------------------
 	//	Hud Factory Function
 	//
 	//---------------------------------------------------
@@ -343,7 +385,7 @@ MYGAME.graphics = (function() {
 
 		that.getWidth = function(){
 			return spec.x + 150;
-		}
+		};
 
 		that.setPos = function(x, y){
 			spec.x = x;
@@ -358,6 +400,14 @@ MYGAME.graphics = (function() {
 			spec.placing = sel;
 		};
 
+		that.setPlaced = function(placed){
+			spec.placed = placed;
+		};
+
+		that.getPlaced = function(){
+			return spec.placed;
+		};
+
 		that.setCount = function(count){
 			if(count >= 0){
 				spec.count = count;
@@ -366,7 +416,15 @@ MYGAME.graphics = (function() {
 
 		that.getCount = function(){
 			return spec.count;
-		}
+		};
+
+		that.setUsed = function(used_count){
+			spec.usedMarkers = used_count;
+		};
+
+		that.getUsed = function(){
+			return spec.usedMarkers;
+		};
 
 		that.detectMouse = function(x,y){
 	        var mouseOverF = false;
@@ -582,6 +640,7 @@ MYGAME.graphics = (function() {
 	    Person: Person,
 		Car: Car,
 	    map: map,
+	    map_element: map_element,
 	    HUD: HUD,
 	    HUD_Element: HUD_Element,
 	    background: background,
