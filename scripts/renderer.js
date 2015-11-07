@@ -107,6 +107,58 @@ MYGAME.graphics = (function() {
 
 	    return that;
 	}
+	
+	//---------------------------------------------------
+    //
+    //  Car Factory Function
+    //
+    //---------------------------------------------------
+	function Car(spec) {
+	    var that = {};
+
+	    that.setPos = function (x, y) {
+	        spec.x = x;
+	        spec.y = y;
+	    };
+
+	    that.goUp = function (elapsedTime){
+			spec.rotation = (3.14/2); 
+			spec.y += spec.speed * elapsedTime * -1;
+		};
+		
+		that.goDown = function (elapsedTime){
+			spec.rotation = 3*(3.14/2);
+			spec.y += spec.speed * elapsedTime * 1; 
+		};
+		
+		that.goLeft = function (elapsedTime){
+			spec.rotation = 0;
+			spec.x += spec.speed * elapsedTime * -1;
+		};
+		
+		that.goRight = function (elapsedTime){
+			spec.rotation = 3.14;
+			spec.x += spec.speed * elapsedTime * 1;
+		};
+
+	    that.draw = function() {
+			context.save();
+			
+			context.translate(spec.x, spec.y);
+			context.rotate(spec.rotation);
+			context.translate(-spec.x, -spec.y);
+			
+			context.drawImage(
+				spec.image,
+				spec.x - spec.width/2, 
+				spec.y - spec.height/2,
+				spec.width, spec.height);
+			
+			context.restore();
+		};
+
+	    return that;
+	}
 
 	//---------------------------------------------------
 	//
@@ -366,6 +418,7 @@ MYGAME.graphics = (function() {
 	    Texture: Texture,
 	    Text: Text,
 	    Person: Person,
+		Car: Car,
 	    HUD: HUD,
         background: background,
 	    roundRect: roundRect,

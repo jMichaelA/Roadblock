@@ -51,6 +51,7 @@ window.addEventListener('load', function() {
 				'preload!media/WalkR_1.png',
 				'preload!media/WalkR_2.png',
 				'preload!media/WalkR_3.png',
+				'preload!media/car.png',
                 'preload!scripts/soundPlayer.js',
 				//'preload!media/sounds/arcadeSound.' + MYGAME.audioExt,
                 'preload!scripts/renderer.js',

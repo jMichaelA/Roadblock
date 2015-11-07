@@ -37,8 +37,18 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				iter: 0,
 				imgTime: 0,
 			}),
+			
+			//--------------------------------
+            //  CAR OBJECTS
+            //--------------------------------
             
-
+			car1 = graphics.Car( {
+				image : MYGAME.images['media/car.png'],
+				x:	700, y: 200 ,
+				width : 128, height : 64,
+				speed : 60,	//pixels per second
+				rotation: 0,
+			}),
 
             /*//--------------------------------
             //  TEXT OBJECTS
@@ -106,6 +116,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             secCount = 0,
             min = 0,
 			tempTime = 0,
+			tempTime2 = 0,
 
             currentScore = 0,
             level = 1,
@@ -191,6 +202,28 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				tempTime = 0;
 			}
 			
+			//----------------------------------------------
+            //  UPDATE CAR POSITION
+            //----------------------------------------------
+			tempTime2 += elapsedTime;
+			
+			if(tempTime2 <= 5){
+				car1.goDown(elapsedTime);
+			}
+			else if(tempTime2 > 5 && tempTime2 <= 10){
+				car1.goRight(elapsedTime);
+			}
+			else if(tempTime2 > 10 && tempTime2 <= 15){
+				car1.goUp(elapsedTime);
+			}
+			else if(tempTime2 > 15 && tempTime2 <= 20){
+				car1.goLeft(elapsedTime);
+			}
+			else{
+				tempTime2 = 0;
+			}
+			
+			
             //----------------------------------------------
             //  UPDATE TEXT POSITIONS
             //----------------------------------------------
@@ -258,6 +291,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
 
 			person1.draw();
+			car1.draw();
 			hud.draw();
 
             //Draw Info Box
