@@ -831,7 +831,7 @@ function getGoogleMap(lat, longitude){
 	// console.log(markers);
 	var canvas = document.getElementById('id-canvas');
     var image_source = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + lat + "," +
-                    longitude + "&zoom=10&size="+canvas.width+"x"+
+                    longitude + "&zoom=18&size="+canvas.width+"x"+
                     canvas.height+ markers + "&style=feature:road|element:geometry|weight:5.5|color:black|lightness:100&style=element:geometry.stroke|visibility:off&style=feature:landscape|element:geometry|saturation:-100&style=feature:water|saturation:-100|invert_lightness:true?key=AIzaSyB9-sOEES1LmBR83pxuLoJzsKWBqXZCa5k";
                     // console.log(image_source);
     return image_source;
