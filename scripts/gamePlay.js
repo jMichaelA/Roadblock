@@ -56,6 +56,22 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
+				die: false,
+				sel: false,
+			}),
+			
+			person2 = graphics.Person( {
+				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png'],
+						MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_1.png'],MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_3.png'],	
+						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
+						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
+				x:	200, y:300 ,
+				width : 46, height : 64,
+				speed : 15,	//pixels per second
+				iter: 0,
+				imgTime: 0,
+				die: false,
+				sel: false,
 			}),
 			
 			//--------------------------------
@@ -96,10 +112,12 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             var canX = 0,
                 canY = 0,
-                gameArea = document.getElementById('gameArea');
+				gameAreaJ = $("#gameArea");
 
-            canX = e.clientX - gameArea.offsetLeft;
-            canY = e.clientY - gameArea.offsetTop;
+            canX = e.clientX - gameArea.offsetLeft - gameAreaJ.width()*0.0155;
+            canY = e.clientY - gameArea.offsetTop + gameAreaJ.height()*0.0809;
+			
+			person2.detectMouse(canX, canY);
 
         };
 
@@ -108,6 +126,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         //--------------------------------
         that.click = function (e) {
 
+			if(person2.isClk()){
+				person2.setDeath(true);
+			}
         };
 		
 		//--------------------------------
@@ -209,6 +230,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             map.draw();
 			person1.draw();
+			if(!person2.getDeath()){
+				person2.draw();
+			}
 			car1.draw();
 			hud.draw();
             hud_stop.draw();

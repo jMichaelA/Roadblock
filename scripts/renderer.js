@@ -52,6 +52,43 @@ MYGAME.graphics = (function() {
 		that.setIter = function (iter) {
 			spec.iter = iter;
 		};
+		
+		that.detectMouse = function(x,y){
+	        var mouseOverF = false;
+			//var gameArea = document.getElementById('gameArea');
+			var gameArea = $("#gameArea");
+
+			console.log("canX and Y: "+x+" "+y+"\n");
+			console.log("specX and Y: "+spec.x+" "+spec.y+"\n");
+			console.log("canW and H: "+gameArea.width()+" "+gameArea.height()+"\n");
+			
+	        if (y > (spec.y - spec.height/2) && y < (spec.y + spec.height/2)) {
+	            if (x > (spec.x - spec.width/2)  && x < (spec.x + spec.width/2)) {
+	                mouseOverF = true;
+					spec.sel = true;
+	            }
+	            else{
+					spec.sel = false;
+	            }
+	        }
+	        else{
+	            spec.sel = false;
+	        }
+            
+	        return mouseOverF;
+	    };
+		
+		that.isClk = function() {
+			return spec.sel;
+		};
+		
+		that.setDeath = function(state) {
+			spec.die = state;
+		};
+		
+		that.getDeath = function() {
+			return spec.die;
+		};
 
 	    that.goUp = function (elapsedTime){
 			spec.imgTime += elapsedTime;
