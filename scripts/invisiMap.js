@@ -98,8 +98,8 @@ function runSnapToRoad(path) {
   for (var i = 0; i < path.latLngs.j[0].j.length; i++) {
     pathValues.push(path.latLngs.j[0].j[i].toUrlValue());
   }
-
-  $.get('https://roads.googleapis.com/v1/snapToRoads', {
+  localStorage.setItem('path',pathValues.join('|'));
+/*  $.get('https://roads.googleapis.com/v1/snapToRoads', {
     interpolate: true,
     key: apiKey,
     path: pathValues.join('|')
@@ -107,7 +107,7 @@ function runSnapToRoad(path) {
     processSnapToRoadResponse(data);
     drawSnappedPolyline();
     // getAndDrawSpeedLimits();
-  });
+  });*/
 }
 
 // Store snapped polyline returned by the snap-to-road method.
@@ -133,6 +133,12 @@ function drawSnappedPolyline() {
 
   snappedPolyline.setMap(map);
   polylines.push(snappedPolyline);
+}
+
+function latLongToXY(lat,long){
+  pixelWidth = 1200;
+  pixelHeight = 600;
+
 }
 
 // Gets speed limits (for 100 segments at a time) and draws a polyline

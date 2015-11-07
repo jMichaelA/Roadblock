@@ -55,6 +55,7 @@ window.addEventListener('load', function() {
 				'preload!media/Detour.png',
 				'preload!media/StopSign.png',
                 'preload!scripts/soundPlayer.js',
+                'preload!scripts/curveAnimator.js',
 				//'preload!media/sounds/arcadeSound.' + MYGAME.audioExt,
                 'preload!scripts/renderer.js',
                 'preload!scripts/Input.js',

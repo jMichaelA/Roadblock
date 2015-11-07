@@ -46,6 +46,13 @@ MYGAME.graphics = (function() {
 	function Person(spec) {
 	    var that = {};
 
+	    that.getPos = function () {
+	    	return {
+	    		x: spec.x,
+	    		y: spec.y
+	    	};
+	    }
+
 	    that.setPos = function (x, y) {
 	        spec.x = x;
 	        spec.y = y;
@@ -695,15 +702,15 @@ function getRoadLatLongs(lat,longitude){
 	  ];
 
 	  initializeMap(coordinates);
-	// $.ajax({
-	//   type:     "GET",
-	//   url:      "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + longitude-.009 + "&sensor=true_or_false",
-	//   dataType: "json",
-	//   async:   false, 
-	//   success: function(data){
-	//   	window.globalGeolocation = data;
-	//   }
-	// });
+	  $.get('https://roads.googleapis.com/v1/snapToRoads', {
+		    interpolate: true,
+		    key: apiKey,
+		    path: localStorage.path
+		}, function(data) {
+		    processSnapToRoadResponse(data);
+		    drawSnappedPolyline();
+		    console.log(data);
+		});
 }
 
 function getGoogleMap(lat, longitude){

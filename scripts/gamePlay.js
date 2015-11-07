@@ -87,12 +87,17 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             //  PERSON OBJECTS
             //--------------------------------
+            randomStartPos = {
+                x: Math.floor(Math.random() * ((graphics.canvas.width-0)+1) + 0),
+                y: Math.floor(Math.random() * (((graphics.canvas.height-84)-0)+1) + 0)
+            }
+
 			person1 = graphics.Person( {
 				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png'],
 						MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_1.png'],MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_3.png'],	
 						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
-				x:	500, y:300 ,
+				x:	randomStartPos.x, y:randomStartPos.y,
 				width : 34, height : 48,
 				speed : 15,	//pixels per second
 				iter: 0,
@@ -262,12 +267,35 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 map_detour_elements[i].draw();
             }
 
+            canvas = document.getElementById('id-canvas');
+
 			//----------------------------------------------
             //  UPDATE PERSON POSITION
             //----------------------------------------------
-			tempTime += elapsedTime;
-			
-			if(tempTime <= 5){
+			/*tempTime += elapsedTime;
+            var curve = new CurveAnimator([50, 300], [350, 300], [445, 39], [1, 106]);
+
+            curve.animate(10, function(point, angle){
+                if(point.x > person1.getPos().x){
+                    person1.goRight(elapsedTime);
+                }
+
+                if(point.x < person1.getPos().x){
+                    person1.goLeft(elapsedTime);
+                }
+
+                if(point.y > person1.getPos().y){
+                    person1.goDown(elapsedTime);
+                }
+
+                if(point.y < person1.getPos().y){
+                    person1.goUp(elapsedTime);
+                }
+                person1.setPos(point.x,point.y);
+                //person1.draw();
+            });*/
+
+			/*if(tempTime <= 5){
 				person1.goDown(elapsedTime);
 			}
 			else if(tempTime > 5 && tempTime <= 10){
@@ -281,7 +309,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			}
 			else{
 				tempTime = 0;
-			}
+			}*/
 			
 			//----------------------------------------------
             //  UPDATE CAR POSITION
