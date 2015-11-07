@@ -14,8 +14,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 y:graphics.canvas.height - 75,
                 width:graphics.canvas.width,
                 height:75,
-                levelX: 5,
-                levelY: 0
+                levelX: 10,
+                levelY: graphics.canvas.height - 35,
+                level: 1,
+                HUD_elements: {
+                    'stop': 1,
+                    'detour': 1
+                }
             });
 
             //--------------------------------
