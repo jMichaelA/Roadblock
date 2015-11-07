@@ -112,10 +112,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             var canX = 0,
                 canY = 0,
-				gameAreaJ = $("#gameArea");
+				gameArea = document.getElementById('gameArea');
+				gameAreaJ = $("#gameArea"),
+				gameWidth = gameAreaJ.width(),
+				gameHeight = gameAreaJ.height();
 
-            canX = e.clientX - gameArea.offsetLeft - gameAreaJ.width()*0.0155;
-            canY = e.clientY - gameArea.offsetTop + gameAreaJ.height()*0.0809;
+			canX = e.clientX - gameArea.offsetLeft + document.documentElement.scrollLeft;
+			canY = e.clientY - gameArea.offsetTop + document.documentElement.scrollTop;	
 			
 			person2.detectMouse(canX, canY);
 
