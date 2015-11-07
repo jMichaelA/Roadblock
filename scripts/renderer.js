@@ -1,4 +1,6 @@
 var mapImage = 'undefined';
+navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
+
 
 //------------------------------------------------------------------
 //  Overall structure of renderer.js provided by Dean Mathias
@@ -178,19 +180,28 @@ MYGAME.graphics = (function() {
 
 	    that.draw = function() {
 			context.save();
-			if(mapImage == 'undefined'){
-				navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
-			}
 			if(mapImage != 'undefined'){
-				// setTimeout(function(){}, 1000);
-				// console.log(mapImage);
 				context.drawImage(
 					mapImage,
 					spec.x - spec.width/2, 
 					spec.y - spec.height/2,
 					spec.width, spec.height);
 			}
-			
+			else{
+				var position = {
+					coords: {
+						accuracy: 53,
+						latitude: 41.7419047,
+						longitude: -111.81138809999999
+					}
+				};
+				var img = handle_geolocation_query(position);
+				context.drawImage(
+					mapImage,
+					spec.x - spec.width/2, 
+					spec.y - spec.height/2,
+					spec.width, spec.height);
+			}
 			context.restore();
 		};
 	    return that;
@@ -491,5 +502,5 @@ function handle_geolocation_query(position){
     var imageObj = new Image();
     imageObj.src = image_source;
     mapImage = imageObj;
-    console.log(mapImage);
+    console.log(position);
 }
