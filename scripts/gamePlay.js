@@ -18,16 +18,29 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             hud = graphics.HUD({
                 x:0,
-                y:graphics.canvas.height - 75,
+                y: graphics.canvas.height - (graphics.canvas.height / 11),
                 width:graphics.canvas.width,
-                height:75,
+                height: graphics.canvas.width / 11,
                 levelX: 10,
-                levelY: graphics.canvas.height - 35,
-                level: 1,
-                HUD_elements: [
-                    [MYGAME.images['media/StopSign.png'], 1],
-                    [MYGAME.images['media/Detour.png'], 1]
-                ]
+                levelY: graphics.canvas.height - (graphics.canvas.height / 25),
+                level: 1
+            });
+
+            //--------------------------------
+            //  HUD Element
+            //--------------------------------
+            hud_stop = graphics.HUD_Element({
+                x: 150 + 25,
+                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                image: MYGAME.images['media/StopSign.png'],
+                count: 1
+            });
+
+            hud_detour = graphics.HUD_Element({
+                x: hud_stop.getWidth() + 25,
+                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                image: MYGAME.images['media/Detour.png'],
+                count: 1
             });
 
             //--------------------------------
@@ -164,34 +177,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			else{
 				tempTime2 = 0;
 			}
-			
-            //----------------------------------------------
-            //  UPDATE VALUES
-            //----------------------------------------------
-            //Update Score
-            /*scoreDisplay.setText(currentScore);
-
-            //Update Game Time
-            secCount += (elapsedTime / 1000);
-            if (secCount >= 1) {
-                sec++;
-                secCount = 0;
-                if (sec > 59) {
-                    min++;
-                    sec = 0;
-                }
-            }
-
-            if (sec < 10) {
-                timeDisplay.setText(min + ':0' + sec);
-            }
-            else {
-                timeDisplay.setText(min + ':' + sec);
-            }
-
-            //Update Level
-            levelDisplay.setText(level);
-*/
 
             //Check for GAME OVER
             if (min > 0) {
@@ -226,40 +211,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			person1.draw();
 			car1.draw();
 			hud.draw();
-
-            //Draw Info Box
-            //graphics.roundRect((graphics.canvas.width / 10), (graphics.canvas.height / 4) * 3, graphics.canvas.width - (graphics.canvas.width / 10) * 2, (graphics.canvas.height / 4.5), 20, 'darkgreen', 'lightgreen', 4);
-
-            //Draw Info Text
-            //--------------------------------
-            //  SCORE
-            //--------------------------------
-/*            tWidth = scoreText.getWidth();
-            tHeight = scoreText.getHeight();
-            tPos = scoreText.getPos();
-            graphics.roundRect(tPos.x + tWidth + (tWidth / 4), tPos.y - tHeight / 1.5, tWidth * 1.5, tHeight * 1.5, 10, 'darkgreen', 'darkgreen', 1);
-            scoreText.draw();
-            scoreDisplay.draw();
-            //--------------------------------
-            //  TIME
-            //--------------------------------
-            tWidth = timeText.getWidth();
-            tHeight = timeText.getHeight();
-            tPos = timeText.getPos();
-            graphics.roundRect(tPos.x + tWidth + (tWidth / 4), tPos.y - tHeight / 1.5, tWidth * 1.5, tHeight * 1.5, 10, 'darkgreen', 'darkgreen', 1);
-            timeText.draw();
-            timeDisplay.draw();
-            //--------------------------------
-            //  LEVEL
-            //--------------------------------
-            tWidth = levelText.getWidth();
-            tHeight = levelText.getHeight();
-            tPos = levelText.getPos();
-            graphics.roundRect(tPos.x - tWidth / 4, tPos.y + tHeight, tWidth * 1.5, tHeight * 1.5, 10, 'darkgreen', 'darkgreen', 1);
-            levelText.draw();
-            levelDisplay.draw();*/
-
-
+            hud_stop.draw();
+            hud_detour.draw();
         };
 
 
