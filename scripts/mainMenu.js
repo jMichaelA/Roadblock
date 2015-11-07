@@ -22,15 +22,6 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
 
         that.initialize = function () {
-        }
-
-
-        that.update = function (elapsedTime) {
-
-            var canvas = document.getElementById('id-canvas');
-		
-            mouse.update(elapsedTime);
-            
             $('#new_game').on('click',function(){
                 mmClicked = true;
                 $('#main_menu').hide();
@@ -46,6 +37,16 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
                 $('#main_menu').hide();
             });
 
+        }
+
+
+        that.update = function (elapsedTime) {
+
+            var canvas = document.getElementById('id-canvas');
+		
+            mouse.update(elapsedTime);
+            
+            
             //-----------------------------
             //  IF CLICKED
             //-----------------------------
@@ -76,7 +77,7 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
         that.render = function () {
 
-            graphics.clear();
+            // graphics.clear();
 
             //Draw main background
             graphics.background('media/mainMenuBg.png');

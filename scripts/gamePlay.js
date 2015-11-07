@@ -7,6 +7,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         },
 
             //--------------------------------
+            //  map object
+            //--------------------------------            
+            map = graphics.map( {
+                x:  graphics.canvas.width/2, 
+                y: graphics.canvas.height/2,
+                width : graphics.canvas.width, height : graphics.canvas.height,
+            }),
             //  HUD Object
             //--------------------------------
             hud = graphics.HUD({
@@ -17,10 +24,10 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 levelX: 10,
                 levelY: graphics.canvas.height - 35,
                 level: 1,
-                HUD_elements: {
-                    'stop': 1,
-                    'detour': 1
-                }
+                HUD_elements: [
+                    [MYGAME.images['media/StopSign.png'], 1],
+                    [MYGAME.images['media/Detour.png'], 1]
+                ]
             });
 
             //--------------------------------
@@ -142,26 +149,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         };
 
         that.initialize = function () {
-
-            //get location
-            navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
-            
-            function handle_errors(error){
-                switch(error.code){
-                    case error.PERMISSION_DENIED: alert("user did not share geolocation data");
-                    break;
-                    case error.POSITION_UNAVAILABLE: alert("could not detect current position");
-                    break;
-                    case error.TIMEOUT: alert("retrieving position timed out");
-                    break;
-                    default: alert("unknown error");
-                    break;
-                }
-            }
-            function handle_geolocation_query(position){
-                //Draw main background
-                graphics.background(null, position.coords.latitude, position.coords.longitude)
-            }
             
             mouse.registerCommand('mousemove', that.mouseOver);
             mouse.registerCommand('mousedown', that.click);
@@ -280,7 +267,14 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         };
 
         that.render = function () {
+			
+            //--------------------------------
+            //  DRAW Map
+            //--------------------------------
 
+            // map.draw();
+
+            //--------------------------------
             //Clear Canvas
 			graphics.clear();
 			
@@ -289,7 +283,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			//--------------------------------
             //  DRAW PERSON
             //--------------------------------
-
+            map.draw();
 			person1.draw();
 			car1.draw();
 			hud.draw();
