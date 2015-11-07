@@ -802,25 +802,25 @@ function getRoadLatLongs(lat,longitude){
 	    {lat: lat+.001, lng: longitude+.001}
 	  ];
 
-	  initializeMap(coordinates);
-	  $.get('https://roads.googleapis.com/v1/snapToRoads', {
-		    interpolate: true,
-		    key: apiKey,
-		    path: localStorage.path
-		}, function(data) {
-		    processSnapToRoadResponse(data);
-		    drawSnappedPolyline();
+	  // initializeMap(coordinates);
+	 //  $.get('https://roads.googleapis.com/v1/snapToRoads', {
+		//     interpolate: true,
+		//     key: apiKey,
+		//     path: localStorage.path
+		// }, function(data) {
+		//     processSnapToRoadResponse(data);
+		//     drawSnappedPolyline();
 	/*	    for(var i = 0; i < snappedCoordinates.length; i++){
 		    	console.log(snappedCoordinates[i].lat());
 		    	console.log(getCoordPixels(snappedCoordinates[i].lat(),snappedCoordinates[i].lng()));
 		    }*/
 		    //console.log(data);
-		});
+		// });
 }
 
 function getGoogleMap(lat, longitude){
 	var markers = "";
-	console.log(MYGAME.path);
+	// console.log(MYGAME.path);
 
 	for(var i in window.globalGeolocation.results) {
 		markers += "&markers=color:red%7Clabel:" + i + "%7C" + window.globalGeolocation.results[i].geometry.bounds.northeast.lat
