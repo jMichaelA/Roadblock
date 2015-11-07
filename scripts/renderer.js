@@ -58,10 +58,10 @@ MYGAME.graphics = (function() {
 			//var gameArea = document.getElementById('gameArea');
 			var gameArea = $("#gameArea");
 
-			console.log("canX and Y: "+x+" "+y+"\n");
+			/*console.log("canX and Y: "+x+" "+y+"\n");
 			console.log("specX and Y: "+spec.x+" "+spec.y+"\n");
 			console.log("canW and H: "+gameArea.width()+" "+gameArea.height()+"\n");
-			
+			*/
 	        if (y > (spec.y - spec.height/2) && y < (spec.y + spec.height/2)) {
 	            if (x > (spec.x - spec.width/2)  && x < (spec.x + spec.width/2)) {
 	                mouseOverF = true;
@@ -309,7 +309,7 @@ MYGAME.graphics = (function() {
 	    	context.fill();
 
 	    	//Draw rectangle for level
-	    	context.rect(spec.levelX - 10,spec.levelY - 40,150,spec.height);
+	    	context.rect(spec.levelX - 10,spec.levelY - 30,150,spec.height);
 	    	context.stroke();
 
 	    	//Text for level
@@ -349,16 +349,51 @@ MYGAME.graphics = (function() {
 			spec.y = y;
 		};
 
+		that.detectMouse = function(x,y){
+	        var mouseOverF = false;
+			//var gameArea = document.getElementById('gameArea');
+			var gameArea = $("#gameArea");
+
+			console.log("canX and Y: "+x+" "+y+"\n");
+			console.log("specX and Y: "+spec.x+" "+spec.y+"\n");
+			console.log("canW and H: "+gameArea.width()+" "+gameArea.height()+"\n");
+			
+	        if (y > (spec.y - spec.height/2) && y < (spec.y + spec.height/2)) {
+	            if (x > (spec.x - spec.width/2)  && x < (spec.x + spec.width/2)) {
+	                mouseOverF = true;
+					spec.sel = true;
+	            }
+	            else{
+					spec.sel = false;
+	            }
+	        }
+	        else{
+	            spec.sel = false;
+	        }
+            
+	        return mouseOverF;
+	    };
+		
+		that.isClk = function() {
+			return spec.sel;
+		};
+
 		that.draw = function(){
 			context.save();
 
-			context.drawImage(spec.image, spec.x, spec.y + 12, 50, 50);
+			context.drawImage(
+				spec.image, 
+				spec.x - spec.width/2, 
+				spec.y - spec.height/2, 
+				50, 
+				50
+			);
 
 	       	context.font = '30px Arial';
 	        context.textAlign = 'left';
 	        context.textBaseline = 'middle';
 	        context.fillStyle = 'black';
-	       	context.fillText(spec.count, spec.x + 60,spec.y + 40);
+	       	context.fillText(spec.count, spec.x +40,spec.y);
 
 			context.restore();
 		};

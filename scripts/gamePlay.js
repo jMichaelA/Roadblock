@@ -18,11 +18,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             hud = graphics.HUD({
                 x:0,
-                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                y: graphics.canvas.height - 60,
                 width:graphics.canvas.width,
-                height: graphics.canvas.width / 11,
+                height: 60,
                 levelX: 10,
-                levelY: graphics.canvas.height - (graphics.canvas.height / 25),
+                levelY: graphics.canvas.height - 30,
                 level: 1
             });
 
@@ -30,15 +30,19 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //  HUD Element
             //--------------------------------
             hud_stop = graphics.HUD_Element({
-                x: 150 + 25,
-                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                x: 200,
+                y: graphics.canvas.height - 30,
+                width:50,
+                height:50,
                 image: MYGAME.images['media/StopSign.png'],
                 count: 1
             });
 
             hud_detour = graphics.HUD_Element({
-                x: hud_stop.getWidth() + 25,
-                y: graphics.canvas.height - (graphics.canvas.height / 11),
+                x: 350,
+                y: graphics.canvas.height - 30,
+                width:50,
+                height:50,
                 image: MYGAME.images['media/Detour.png'],
                 count: 1
             });
@@ -121,6 +125,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			canY = e.clientY - gameArea.offsetTop + document.documentElement.scrollTop;	
 			
 			person2.detectMouse(canX, canY);
+            hud_stop.detectMouse(canX, canY);
+            hud_detour.detectMouse(canX, canY);
 
         };
 
@@ -132,6 +138,14 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			if(person2.isClk()){
 				person2.setDeath(true);
 			}
+
+            if(hud_stop.isClk()){
+                alert('stop');
+            }
+
+            if(hud_detour.isClk()){
+                alert('detour');
+            }
         };
 		
 		//--------------------------------
