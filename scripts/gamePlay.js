@@ -18,17 +18,31 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             hud = graphics.HUD({
                 x:0,
-                y:graphics.canvas.height - 75,
+                y: graphics.canvas.height - (graphics.canvas.height / 11),
                 width:graphics.canvas.width,
-                height:75,
+                height: graphics.canvas.width / 11,
                 levelX: 10,
-                levelY: graphics.canvas.height - 35,
+                levelY: graphics.canvas.height - (graphics.canvas.height / 25),
                 level: 1,
                 HUD_elements: [
                     [MYGAME.images['media/StopSign.png'], 1],
                     [MYGAME.images['media/Detour.png'], 1]
                 ]
             });
+
+            //--------------------------------
+            //  HUD Element
+            //--------------------------------
+           /* hud_stop = graphics.HUD_Element({
+                x: hud.getWidth() + 50,
+                y: graphics.canvas.height - 45,
+                image: MYGAME.images['media/StopSign.png'],
+                count: 1
+            });
+
+            hud_detour = graphics.HUD_Element({
+
+            });*/
 
             //--------------------------------
             //  PERSON OBJECTS

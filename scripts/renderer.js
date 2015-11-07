@@ -282,6 +282,28 @@ MYGAME.graphics = (function() {
 		return that;
 	}
 
+	//---------------------------------------------------
+	//
+	//	HUD Element Factory Function
+	//
+	//---------------------------------------------------
+	function HUD_Element(spec){
+		var that = {};
+
+		that.getPos = function(){
+			return {
+				x: spec.x,
+				y: spec.y
+			};
+		};
+
+		that.setPos = function(x, y){
+			spec.x = x;
+			spec.y = y;
+		}
+
+		return that;
+	}
     //---------------------------------------------------
     //
     //  Texture Factory Function
