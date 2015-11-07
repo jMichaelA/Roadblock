@@ -162,24 +162,85 @@ MYGAME.graphics = (function() {
 	        spec.y = y;
 	    };
 
+	    that.setStopF = function(val, elapsedTime) {
+	    	
+	    	if(spec.stop === true && spec.stopTime >= 10){
+	    		spec.stopTime = 0;	
+	    	}
+	    	
+			if(spec.stopTime >= 2.5 && spec.stop === true){
+	    		spec.stop = false;
+	    	}
+	    	else if(spec.stopTime >= 10){
+	    		spec.stop = val;
+	    	}
+	    	
+	    	if(spec.stopTime < 10){
+	    		spec.stopTime += elapsedTime;
+	    	}
+	    	
+	    };
+
+	    that.setDetF = function(val) {
+	    	spec.detour = val;
+	    };
+
+	    that.getFlags = function() {
+	    	return {
+				stop: spec.stop,
+				detour: spec.detour,
+			};
+	    }
+
+	    that.getPos = function () {
+	    	return {
+				x: spec.x,
+				y: spec.y,
+				radius: spec.radius,
+			};
+	    };
+
+	    that.getWidth = function() {
+			return spec.width;
+		};
+
+		that.getHeight = function() {
+			return spec.height;
+		};
+
 	    that.goUp = function (elapsedTime){
-			spec.rotation = (3.14/2); 
-			spec.y += spec.speed * elapsedTime * -1;
+			
+			//console.log("stop: "+spec.stop+" stopTime: "+spec.stopTime);
+			console.log("UstopTime: "+spec.stopTime);
+			if(spec.stop == false) {
+				spec.rotation = (3.14/2); 
+				spec.y += spec.speed * elapsedTime * -1;
+			}
 		};
 		
 		that.goDown = function (elapsedTime){
-			spec.rotation = 3*(3.14/2);
-			spec.y += spec.speed * elapsedTime * 1; 
+			console.log("DstopTime: "+spec.stopTime);
+			if(spec.stop == false) {
+				spec.rotation = 3*(3.14/2);
+				spec.y += spec.speed * elapsedTime * 1;
+			}
+			 
 		};
 		
 		that.goLeft = function (elapsedTime){
-			spec.rotation = 0;
-			spec.x += spec.speed * elapsedTime * -1;
+			console.log("LstopTime: "+spec.stopTime);
+			if(spec.stop == false) {
+				spec.rotation = 0;
+				spec.x += spec.speed * elapsedTime * -1;
+			} 
 		};
 		
 		that.goRight = function (elapsedTime){
-			spec.rotation = 3.14;
-			spec.x += spec.speed * elapsedTime * 1;
+			console.log("RstopTime: "+spec.stopTime);
+			if(spec.stop == false) {
+				spec.rotation = 3.14;
+				spec.x += spec.speed * elapsedTime * 1;
+			} 
 		};
 
 	    that.draw = function() {
@@ -244,6 +305,12 @@ MYGAME.graphics = (function() {
 	    return that;
 	}
 
+	//---------------------------------------------------
+    //
+    //  MAP ELEMENT Factory Function
+    //
+    //---------------------------------------------------
+
 	function map_element(spec){
 		var that = {};
 
@@ -255,8 +322,17 @@ MYGAME.graphics = (function() {
 		that.getPos = function(){
 			return {
 				x: spec.x,
-				y: spec.y
+				y: spec.y,
+				radius: spec.radius,
 			};
+		};
+
+		that.getWidth = function() {
+			return spec.width;
+		};
+
+		that.getHeight = function() {
+			return spec.height;
 		};
 
 		that.getPlaced = function(){

@@ -14,17 +14,20 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 width : graphics.canvas.width, height : graphics.canvas.height,
             }),
 
-            map_stop_elements = [];
-            map_detour_elements = [];
+            map_stop_elements = [],
+            map_detour_elements = [],
+            numSigns = 10,
+            i = 0;
 
-            for(var i = 0; i < 10; i++){
-                if (i < 5){
+            for(i = 0; i < numSigns; i++){
+                if (i < (numSigns/2)){
                     image = MYGAME.images['media/StopSign.png'];
                     temp = graphics.map_element({
                         x: 0,
                         y: 0,
                         width: 10,
                         height: 10,
+                        radius: 6,
                         placed: false,
                         image: image
                     });
@@ -37,6 +40,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                         y: 0,
                         width: 10,
                         height: 10,
+                        radius: 6,
                         placed: false,
                         image: image
                     });
@@ -87,7 +91,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             //  PERSON OBJECTS
             //--------------------------------
-			person1 = graphics.Person( {
+			var person1 = graphics.Person( {
 				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png'],
 						MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_1.png'],MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_3.png'],	
 						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
@@ -121,10 +125,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             
 			car1 = graphics.Car( {
 				image : MYGAME.images['media/car.png'],
-				x:	700, y: 200 ,
+				x:	200, y: 100 ,
 				width : 96, height : 48,
 				speed : 60,	//pixels per second
 				rotation: 0,
+                stopTime: 7,
+                stop:false,
+                radius: 40
 			}),
 			
 			//--------------------------------
@@ -134,12 +141,19 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tWidth = 0,
             tHeight = 0,
             tPos = {},
+            objPos1 = {},
+            objPos2 = {},
+            distanceX = 0,
+            distanceY = 0,
+            carStatus = {},
+            k = 0,
 
             sec = 0,
             secCount = 0,
             min = 0,
 			tempTime = 0,
 			tempTime2 = 0,
+            stopTime = 0,
 
             currentScore = 0,
             level = 1,
@@ -245,9 +259,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         }
 
 
-		//--------------------------------
+		//***********************************************************************************************************************
         //  UPDATE 
-        //--------------------------------
+        //***********************************************************************************************************************
         that.update = function (elapsedTime) {
 
             //UPDATE MOUSE
@@ -283,26 +297,73 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				tempTime = 0;
 			}
 			
-			//----------------------------------------------
+			
+            //----------------------------------------------
+            //  CHECK FOR COLLISIONS WITH SIGNS
+            //----------------------------------------------
+
+            objPos1 = car1.getPos();
+
+
+            for(k = 0; k < numSigns; k++){
+                if(k < (numSigns/2)){
+                    
+                    objPos2 = map_stop_elements[k].getPos();
+ 
+                    distanceX = Math.abs(objPos1.x - objPos2.x);
+                    distanceY = Math.abs(objPos1.y - objPos2.y);
+
+                    if(distanceX <= (objPos1.radius+objPos2.radius) && distanceY <= (objPos1.radius+objPos2.radius)){
+                            //Collision with Stop Sign
+                            car1.setStopF(true,elapsedTime);
+                            k = numSigns;
+                            console.log("Stop Sign Detection");
+                        
+                    }
+                    else{
+                        car1.setStopF(false,elapsedTime);
+                    }
+                }
+                else{
+                    
+                    objPos2 = map_detour_elements[k-(numSigns/2)].getPos();
+ 
+                    distanceX = Math.abs(objPos1.x - objPos2.x);
+                    distanceY = Math.abs(objPos1.y - objPos2.y);
+
+                    if(distanceX <= (objPos1.radius+objPos2.radius) && distanceY <= (objPos1.radius+objPos2.radius)){
+                            //Collision with Detour Sign
+                            car1.setDetF(true);
+                            console.log("Detour Sign Detection");
+                    }
+                    else{
+                        car1.setDetF(false);
+                    }
+                }
+            }
+
+            //----------------------------------------------
             //  UPDATE CAR POSITION
             //----------------------------------------------
-			tempTime2 += elapsedTime;
-			
-			if(tempTime2 <= 5){
-				car1.goDown(elapsedTime);
-			}
-			else if(tempTime2 > 5 && tempTime2 <= 10){
-				car1.goRight(elapsedTime);
-			}
-			else if(tempTime2 > 10 && tempTime2 <= 15){
-				car1.goUp(elapsedTime);
-			}
-			else if(tempTime2 > 15 && tempTime2 <= 20){
-				car1.goLeft(elapsedTime);
-			}
-			else{
-				tempTime2 = 0;
-			}
+            tempTime2 += elapsedTime;
+            carStatus = car1.getFlags();
+            
+            if(tempTime2 <= 6){
+                car1.goDown(elapsedTime);
+            }
+            else if(tempTime2 > 6 && tempTime2 <= 12){
+                car1.goRight(elapsedTime);
+            }
+            else if(tempTime2 > 12 && tempTime2 <= 18){
+                car1.goUp(elapsedTime);
+            }
+            else if(tempTime2 > 18 && tempTime2 <= 24){
+                car1.goLeft(elapsedTime);
+            }
+            else{
+                tempTime2 = 0;
+            }
+            
 
             //Check for GAME OVER
             if (min > 0) {
@@ -316,6 +377,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
         };
 
+        //***********************************************************************************************************************
+        //     RENDER
+        //***********************************************************************************************************************
         that.render = function () {
 			
             //--------------------------------
