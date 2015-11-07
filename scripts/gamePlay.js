@@ -56,7 +56,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	500, y:300 ,
-				width : 46, height : 64,
+				width : 34, height : 48,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
@@ -70,7 +70,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	200, y:300 ,
-				width : 46, height : 64,
+				width : 34, height : 48,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
@@ -85,7 +85,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			car1 = graphics.Car( {
 				image : MYGAME.images['media/car.png'],
 				x:	700, y: 200 ,
-				width : 128, height : 64,
+				width : 96, height : 48,
 				speed : 60,	//pixels per second
 				rotation: 0,
 			}),
