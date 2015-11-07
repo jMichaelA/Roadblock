@@ -14,17 +14,20 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 width : graphics.canvas.width, height : graphics.canvas.height,
             }),
 
-            map_stop_elements = [];
-            map_detour_elements = [];
+            map_stop_elements = [],
+            map_detour_elements = [],
+            numSigns = 10,
+            i = 0;
 
-            for(var i = 0; i < 10; i++){
-                if (i < 5){
+            for(i = 0; i < numSigns; i++){
+                if (i < (numSigns/2)){
                     image = MYGAME.images['media/StopSign.png'];
                     temp = graphics.map_element({
                         x: 0,
                         y: 0,
                         width: 10,
                         height: 10,
+                        radius: 6,
                         placed: false,
                         image: image
                     });
@@ -37,6 +40,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                         y: 0,
                         width: 10,
                         height: 10,
+                        radius: 6,
                         placed: false,
                         image: image
                     });
@@ -87,23 +91,30 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             //  PERSON OBJECTS
             //--------------------------------
+
             randomStartPos = {
                 x: Math.floor(Math.random() * ((graphics.canvas.width-0)+1) + 0),
                 y: Math.floor(Math.random() * (((graphics.canvas.height-84)-0)+1) + 0)
-            }
+            };
 
-			person1 = graphics.Person( {
+			var person1 = graphics.Person( {
+            
 				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png'],
 						MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_1.png'],MYGAME.images['media/WalkB_2.png'],MYGAME.images['media/WalkB_3.png'],	
 						MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_1.png'],MYGAME.images['media/WalkL_2.png'],MYGAME.images['media/WalkL_3.png'],
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	randomStartPos.x, y:randomStartPos.y,
 				width : 34, height : 48,
+                radius: 10,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
+<<<<<<< HEAD
                 direction: Math.floor(Math.random() * (4 - 1 + 1)) + 1,
 				die: false,
+=======
+				dead: false,
+>>>>>>> 9a42a53b5eef70c0dcbe60cde4d57bb6d70dfe0d
 				sel: false,
 			}),
 			
@@ -114,10 +125,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	200, y:300 ,
 				width : 34, height : 48,
+                radius: 10,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
-				die: false,
+				dead: false,
 				sel: false,
 			}),
 			
@@ -127,11 +139,14 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             
 			car1 = graphics.Car( {
 				image : MYGAME.images['media/car.png'],
-				x:	700, y: 200 ,
+				x:	200, y: 100 ,
 				width : 96, height : 48,
                 direction: Math.floor(Math.random() * (4 - 1 + 1)) + 1,
 				speed : 60,	//pixels per second
 				rotation: 0,
+                stopTime: 7,
+                stop:false,
+                radius: 40
 			}),
 			
 			//--------------------------------
@@ -141,12 +156,19 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tWidth = 0,
             tHeight = 0,
             tPos = {},
+            objPos1 = {},
+            objPos2 = {},
+            distanceX = 0,
+            distanceY = 0,
+            carStatus = {},
+            k = 0,
 
             sec = 0,
             secCount = 0,
             min = 0,
 			tempTime = 0,
 			tempTime2 = 0,
+            stopTime = 0,
 
             currentScore = 0,
             level = 1,
@@ -242,6 +264,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             mouse.registerCommand('mousemove', that.mouseOver);
             mouse.registerCommand('mousedown', that.click);
 
+            $('#main_menu').hide();
+
             that.dead = false;
             sec = 0;
             secCount = 0;
@@ -252,9 +276,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         }
 
 
-		//--------------------------------
+		//***********************************************************************************************************************
         //  UPDATE 
-        //--------------------------------
+        //***********************************************************************************************************************
         that.update = function (elapsedTime) {
 
             //UPDATE MOUSE
@@ -274,7 +298,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			//----------------------------------------------
             //  UPDATE PERSON POSITION
             //----------------------------------------------
-
 
             tempTime += elapsedTime;
             
@@ -304,38 +327,94 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 tempTime = 0;
             }
 			
-			//----------------------------------------------
+            //----------------------------------------------
+            //  CHECK FOR COLLISIONS WITH SIGNS
+            //----------------------------------------------
+
+            objPos1 = car1.getPos();
+
+
+            for(k = 0; k < numSigns; k++){
+                if(k < (numSigns/2)){
+                    
+                    objPos2 = map_stop_elements[k].getPos();
+ 
+                    distanceX = Math.abs(objPos1.x - objPos2.x);
+                    distanceY = Math.abs(objPos1.y - objPos2.y);
+
+                    if(distanceX <= (objPos1.radius+objPos2.radius) && distanceY <= (objPos1.radius+objPos2.radius)){
+                            //Collision with Stop Sign
+                            car1.setStopF(true,elapsedTime);
+                            k = numSigns;
+                            console.log("Stop Sign Detection");
+                        
+                    }
+                    else{
+                        car1.setStopF(false,elapsedTime);
+                    }
+                }
+                else{
+                    
+                    objPos2 = map_detour_elements[k-(numSigns/2)].getPos();
+ 
+                    distanceX = Math.abs(objPos1.x - objPos2.x);
+                    distanceY = Math.abs(objPos1.y - objPos2.y);
+
+                    if(distanceX <= (objPos1.radius+objPos2.radius) && distanceY <= (objPos1.radius+objPos2.radius)){
+                            //Collision with Detour Sign
+                            car1.setDetF(true);
+                            console.log("Detour Sign Detection");
+                    }
+                    else{
+                        car1.setDetF(false);
+                    }
+                }
+            }
+
+            //----------------------------------------------
+            //  CHECK FOR COLLISIONS WITH HUMAN
+            //----------------------------------------------
+
+            objPos1 = car1.getPos();
+            objPos2 = person1.getPos();
+ 
+            distanceX = Math.abs(objPos1.x - objPos2.x);
+            distanceY = Math.abs(objPos1.y - objPos2.y);
+
+            if(distanceX <= (objPos1.radius+objPos2.radius) && distanceY <= (objPos1.radius+objPos2.radius)){
+                    //Collision with Stop Sign
+                    person1.dieF(true);
+                    console.log("Game Over");
+                
+            }
+            else{
+                person1.dieF(false);
+            }
+
+            //----------------------------------------------
             //  UPDATE CAR POSITION
             //----------------------------------------------
-			tempTime2 += elapsedTime;
-			if(tempTime2 <= 5){
-                if(edgeDetect(car1.getPos().x,car1.getPos().y) != 'None'){
-                    car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
-                }
-
-                //edgeDetect(person1.getPos().x,person1.getPos().y);
-                if(car1.getDirection() == 1){
-                    car1.goUp(elapsedTime);
-                }
-
-                if(car1.getDirection() == 2){
-                    car1.goDown(elapsedTime);
-                }
-
-                if(car1.getDirection() == 3){
-                    car1.goLeft(elapsedTime);
-                }
-
-                if(car1.getDirection() == 4){
-                    car1.goRight(elapsedTime);
-                }
-            }else{
-                car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
+            tempTime2 += elapsedTime;
+            carStatus = car1.getFlags();
+            
+            if(tempTime2 <= 6){
+                car1.goDown(elapsedTime);
+            }
+            else if(tempTime2 > 6 && tempTime2 <= 12){
+                car1.goRight(elapsedTime);
+            }
+            else if(tempTime2 > 12 && tempTime2 <= 18){
+                car1.goUp(elapsedTime);
+            }
+            else if(tempTime2 > 18 && tempTime2 <= 24){
+                car1.goLeft(elapsedTime);
+            }
+            else{
                 tempTime2 = 0;
             }
 
             //Check for GAME OVER
-            if (min > 0) {
+            if (person1.isDead()) {
 
                 gameStack[gameStack.length] = MYGAME.menus['GameOverState'].Menu();
                 gameStack[gameStack.length - 1].initialize();
@@ -346,6 +425,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
         };
 
+        //***********************************************************************************************************************
+        //     RENDER
+        //***********************************************************************************************************************
         that.render = function () {
 			
             //--------------------------------

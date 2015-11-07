@@ -129,7 +129,7 @@ MYGAME.menus['GameOverState'] = (function (graphics, input, gameStack) {
             var canvas = document.getElementById('id-canvas');
 
             //Draw main background
-            graphics.background('media/midTerm.png');
+            //graphics.background('media/midTerm.png');
 
             //Draw Menu RoundRect
             graphics.roundRect(0, 0, canvas.width, canvas.height, 20, 'rgba(00,64,00,0.5)', 'rgba(00,64,00,0.75)');

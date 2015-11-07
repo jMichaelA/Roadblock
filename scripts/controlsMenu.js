@@ -110,6 +110,8 @@ MYGAME.menus['ControlsMenuState'] = (function (graphics, input, gameStack) {
 
                 bClicked = false;
 
+                graphics.clear();
+
             }
 
         };

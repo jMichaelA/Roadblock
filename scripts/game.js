@@ -16,13 +16,16 @@ MYGAME.game = (function(input,menu, gameStack) {
 
     function update(elapsedTime) {
 
+
         if (gameStack[gameStack.length - 1].dead === true) {
             gameStack.pop();
+            $('#main_menu').show();
         }
 
         if (gameStack[gameStack.length - 1].gameOver === true) {
             gameStack.pop();
             gameStack.pop();
+            $('#main_menu').show();
         }
 
         gameStack[gameStack.length - 1].update(elapsedTime);

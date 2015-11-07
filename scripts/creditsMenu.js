@@ -17,7 +17,7 @@ MYGAME.menus['CreditsMenuState'] = (function (graphics, input, gameStack) {
                 font: '32px Arial',
                 align: 'center',
                 textColor: 'lightgreen',
-                text: 'Justin Cox',
+                text: 'Leroy Jenkins',
                 baseLine: 'middle',
                 x: graphics.canvas.width / 2,
                 y: (graphics.canvas.height / 3) + ((graphics.canvas.height / 3) / 4)
