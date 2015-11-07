@@ -371,9 +371,9 @@ MYGAME.graphics = (function() {
 			//var gameArea = document.getElementById('gameArea');
 			var gameArea = $("#gameArea");
 
-			console.log("canX and Y: "+x+" "+y+"\n");
-			console.log("specX and Y: "+spec.x+" "+spec.y+"\n");
-			console.log("canW and H: "+gameArea.width()+" "+gameArea.height()+"\n");
+			//console.log("canX and Y: "+x+" "+y+"\n");
+			//console.log("specX and Y: "+spec.x+" "+spec.y+"\n");
+			//console.log("canW and H: "+gameArea.width()+" "+gameArea.height()+"\n");
 			
 	        if (y > (spec.y - spec.height/2) && y < (spec.y + spec.height/2)) {
 	            if (x > (spec.x - spec.width/2)  && x < (spec.x + spec.width/2)) {
