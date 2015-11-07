@@ -220,7 +220,10 @@ MYGAME.graphics = (function() {
 	        context.fillText('Level: ' + spec.level, spec.levelX, spec.levelY);
 
 	        //Draw HUD elements
-
+	        for(var i = 0; i < spec.HUD_elements.length; i++){
+	        	context.drawImage(spec.HUD_elements[i][0], spec.levelX + 150*(i+1), spec.levelY - 28, 50, 50);
+	        	context.fillText(spec.HUD_elements[i][1], spec.levelX + 60 + (150*(i+1)),spec.levelY);
+	        }
 	        context.restore();
 	    };
 
