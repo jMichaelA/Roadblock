@@ -219,10 +219,10 @@ MYGAME.graphics = (function() {
 		    var imageObj = new Image();
 		    imageObj.src = google_tile;
 	    
-		    context.save();
+		    // context.save();
 		    context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
 		    // context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
-		    context.restore();
+		    // context.restore();
 		}
 		else{
 		    context.save();
