@@ -44,67 +44,23 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				iter: 0,
 				imgTime: 0,
 			}),
-            
-
-
-            /*//--------------------------------
-            //  TEXT OBJECTS
+			
+			//--------------------------------
+            //  CAR OBJECTS
             //--------------------------------
-            scoreText = graphics.Text({
-                font: '24px Arial',
-                align: 'left',
-                textColor: 'black',
-                text: 'Score:',
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 1.5,
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-            scoreDisplay = graphics.Text({
-                font: '20px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 0,
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 4,
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-            timeText = graphics.Text({
-                font: '24px Arial',
-                align: 'left',
-                textColor: 'black',
-                text: 'Time:',
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 1.5,
-                y: ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2)
-            }),
-            timeDisplay = graphics.Text({
-                font: '20px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 0,
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 4,
-                y: ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2)
-            }),
-            levelText = graphics.Text({
-                font: '24px Arial',
-                align: 'left',
-                textColor: 'black',
-                text: 'Level',
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)),
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-            levelDisplay = graphics.Text({
-                font: '20px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 0,
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)),
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-*/
+            
+			car1 = graphics.Car( {
+				image : MYGAME.images['media/car.png'],
+				x:	700, y: 200 ,
+				width : 128, height : 64,
+				speed : 60,	//pixels per second
+				rotation: 0,
+			}),
+			
+			//--------------------------------
+            //  OTHER VARS
+            //--------------------------------
+
             tWidth = 0,
             tHeight = 0,
             tPos = {},
@@ -113,13 +69,16 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             secCount = 0,
             min = 0,
 			tempTime = 0,
+			tempTime2 = 0,
 
             currentScore = 0,
             level = 1,
 
             mouse = input.Mouse();
 
-
+		//--------------------------------
+        //  MOUSE OVER FUNCTION
+        //--------------------------------
         that.mouseOver = function (e) {
 
             var canX = 0,
@@ -131,12 +90,17 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
         };
 
-
+		//--------------------------------
+        //  CLICK FUNCTION
+        //--------------------------------
         that.click = function (e) {
             
 
         };
-
+		
+		//--------------------------------
+        //  INITIALIZE 
+        //--------------------------------
         that.initialize = function () {
             
             mouse.registerCommand('mousemove', that.mouseOver);
@@ -152,6 +116,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         }
 
 
+		//--------------------------------
+        //  UPDATE 
+        //--------------------------------
         that.update = function (elapsedTime) {
 
             //UPDATE MOUSE
@@ -178,21 +145,27 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				tempTime = 0;
 			}
 			
+			//----------------------------------------------
+            //  UPDATE CAR POSITION
             //----------------------------------------------
-            //  UPDATE TEXT POSITIONS
-            //----------------------------------------------
-            /*scoreText.setPos((graphics.canvas.width / 10) * 1.5, ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
-            scoreDisplay.setPos((graphics.canvas.width / 10) * 4.6, ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
-
-            timeText.setPos((graphics.canvas.width / 10) * 1.5, ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2));
-            timeDisplay.setPos((graphics.canvas.width / 10) * 4.2, ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2));
-
-            tWidth = levelText.getWidth();
-            tHeight = levelText.getHeight();
-            tPos = levelText.getPos();
-            levelText.setPos((graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)), ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
-            levelDisplay.setPos(tPos.x + tWidth / 2, tPos.y + tHeight + (tHeight / 1.5))
-*/
+			tempTime2 += elapsedTime;
+			
+			if(tempTime2 <= 5){
+				car1.goDown(elapsedTime);
+			}
+			else if(tempTime2 > 5 && tempTime2 <= 10){
+				car1.goRight(elapsedTime);
+			}
+			else if(tempTime2 > 10 && tempTime2 <= 15){
+				car1.goUp(elapsedTime);
+			}
+			else if(tempTime2 > 15 && tempTime2 <= 20){
+				car1.goLeft(elapsedTime);
+			}
+			else{
+				tempTime2 = 0;
+			}
+			
             //----------------------------------------------
             //  UPDATE VALUES
             //----------------------------------------------
@@ -252,6 +225,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             map.draw();
 			person1.draw();
+			car1.draw();
 			hud.draw();
 
             //Draw Info Box

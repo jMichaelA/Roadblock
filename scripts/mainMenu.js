@@ -61,15 +61,15 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             else if (cClicked === true) {
                 gameStack[gameStack.length] = MYGAME.menus['ControlsMenuState'].Menu();
                 gameStack[gameStack.length - 1].initialize();
-
+				
                 cClicked = false;
                 cSelected = false;
             }
             else if (cdClicked === true) {
                 gameStack[gameStack.length] = MYGAME.menus['CreditsMenuState'].Menu();
                 gameStack[gameStack.length - 1].initialize();
-
-                cdClicked = false;
+				
+				cdClicked = false;
                 cdSelected = false;
             }
 
