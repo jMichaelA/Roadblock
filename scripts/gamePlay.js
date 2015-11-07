@@ -17,10 +17,10 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 levelX: 10,
                 levelY: graphics.canvas.height - 35,
                 level: 1,
-                HUD_elements: {
-                    'stop': 1,
-                    'detour': 1
-                }
+                HUD_elements: [
+                    [MYGAME.images['media/StopSign.png'], 1],
+                    [MYGAME.images['media/Detour.png'], 1]
+                ]
             });
 
             //--------------------------------
