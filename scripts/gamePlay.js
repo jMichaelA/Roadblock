@@ -10,7 +10,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //  PERSON OBJECTS
             //--------------------------------
 			person1 = graphics.Person( {
-				image : MYGAME.images['media/WalkF_2.png'],
+				images : [MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_1.png'],MYGAME.images['media/WalkF_2.png'],MYGAME.images['media/WalkF_3.png']],
 				x:	500, y: 500,
 				width : 23, height : 32,
 				speed : 2, //pixels per second

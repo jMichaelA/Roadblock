@@ -49,8 +49,9 @@ MYGAME.graphics = (function() {
 		
 		};
 		
-		that.goDown = function (){
-		
+		that.goDown = function (elapsedTime){
+			spec.iter = (spec.iter+1)%4;
+			spec.y += spec.speed * elapsedTime * -1; 
 		};
 		
 		that.goLeft = function (){
