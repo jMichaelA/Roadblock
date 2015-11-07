@@ -28,7 +28,7 @@ MYGAME.graphics = (function() {
 	};
 
 	function clear() {
-	    context.clear;
+	    context.clear();
 	}
 
 
@@ -49,8 +49,15 @@ MYGAME.graphics = (function() {
 		
 		};
 		
-		that.goDown = function (){
-		
+		that.goDown = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.5){
+				spec.iter = (spec.iter+1)%4;
+				spec.imgTime = 0;
+			}
+			
+			spec.y += spec.speed * elapsedTime * 1; 
 		};
 		
 		that.goLeft = function (){
@@ -65,7 +72,7 @@ MYGAME.graphics = (function() {
 			context.save();
 			
 			context.drawImage(
-				spec.image,
+				spec.images[spec.iter],
 				spec.x - spec.width/2, 
 				spec.y - spec.height/2,
 				spec.width, spec.height);

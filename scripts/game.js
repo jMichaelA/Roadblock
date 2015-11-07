@@ -35,7 +35,7 @@ MYGAME.game = (function(input,menu, gameStack) {
     }
 
     function gameLoop(time) {
-        elapsedTime = time - lastTime;
+        elapsedTime = ((time - lastTime)/1000);
         lastTime = time;
 
         collectInput(elapsedTime);
