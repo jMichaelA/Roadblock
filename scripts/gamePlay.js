@@ -140,11 +140,21 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			}
 
             if(hud_stop.isClk()){
-                alert('stop');
+                if(!hud_stop.getPlacing()){
+                    hud_detour.setPlacing(false);
+                    hud_stop.setPlacing(true);
+                }else{
+                    hud_stop.setPlacing(false);
+                }
             }
 
             if(hud_detour.isClk()){
-                alert('detour');
+                if(!hud_detour.getPlacing()){
+                    hud_stop.setPlacing(false);
+                    hud_detour.setPlacing(true);
+                }else{
+                    hud_detour.setPlacing(false);
+                }
             }
         };
 		

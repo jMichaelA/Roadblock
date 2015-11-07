@@ -349,6 +349,24 @@ MYGAME.graphics = (function() {
 			spec.y = y;
 		};
 
+		that.getPlacing = function(){
+			return spec.placing;
+		};
+
+		that.setPlacing = function(sel){
+			spec.placing = sel;
+		};
+
+		that.setCount = function(count){
+			if(count >= 0){
+				spec.count = count;
+			}
+		};
+
+		that.getCount = function(){
+			return spec.count;
+		}
+
 		that.detectMouse = function(x,y){
 	        var mouseOverF = false;
 			//var gameArea = document.getElementById('gameArea');
@@ -380,6 +398,11 @@ MYGAME.graphics = (function() {
 
 		that.draw = function(){
 			context.save();
+
+			if(spec.placing){
+	        	context.fillStyle = "#777";
+				context.fillRect(spec.x - spec.width/2,spec.y - spec.height/2,spec.width + 75, spec.height);
+			}
 
 			context.drawImage(
 				spec.image, 
