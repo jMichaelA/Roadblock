@@ -130,8 +130,8 @@ MYGAME.graphics = (function() {
 				navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
 			}
 			if(mapImage != 'undefined'){
-				setTimeout(function(){}, 1000);
-				console.log(mapImage);
+				// setTimeout(function(){}, 1000);
+				// console.log(mapImage);
 				context.drawImage(
 					mapImage,
 					spec.x - spec.width/2, 
