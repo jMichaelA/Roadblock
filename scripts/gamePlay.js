@@ -94,7 +94,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         //  CLICK FUNCTION
         //--------------------------------
         that.click = function (e) {
-            
 
         };
 		
