@@ -7,6 +7,13 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         },
 
             //--------------------------------
+            //  map object
+            //--------------------------------            
+            map = graphics.map( {
+                x:  500, y: 500,
+                width : 300, height : 350,
+            }),
+            //--------------------------------
             //  PERSON OBJECTS
             //--------------------------------
 			person1 = graphics.Person( {
@@ -106,26 +113,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         };
 
         that.initialize = function () {
-
-            //get location
-            navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
-            
-            function handle_errors(error){
-                switch(error.code){
-                    case error.PERMISSION_DENIED: alert("user did not share geolocation data");
-                    break;
-                    case error.POSITION_UNAVAILABLE: alert("could not detect current position");
-                    break;
-                    case error.TIMEOUT: alert("retrieving position timed out");
-                    break;
-                    default: alert("unknown error");
-                    break;
-                }
-            }
-            function handle_geolocation_query(position){
-                //Draw main background
-                graphics.background(null, position.coords.latitude, position.coords.longitude)
-            }
             
             mouse.registerCommand('mousemove', that.mouseOver);
             mouse.registerCommand('mousedown', that.click);
@@ -207,8 +194,15 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         that.render = function () {
 
             //Draw main background
-            
-			//--------------------------------
+            graphics.background('media/mainMenuBg.png');
+			
+            //--------------------------------
+            //  DRAW Map
+            //--------------------------------
+
+            map.draw();
+
+            //--------------------------------
             //  DRAW PERSON
             //--------------------------------
 

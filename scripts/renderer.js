@@ -1,3 +1,5 @@
+var mapImage = 'undefined';
+
 //------------------------------------------------------------------
 //  Overall structure of renderer.js provided by Dean Mathias
 //------------------------------------------------------------------
@@ -76,6 +78,39 @@ MYGAME.graphics = (function() {
 	    return that;
 	}
 
+	//---------------------------------------------------
+    //
+    //  map Factory Function
+    //
+    //---------------------------------------------------
+	function map(spec) {
+	    var that = {};
+	    // var position = {};
+
+	    that.setPos = function (x, y) {
+	        spec.x = x;
+	        spec.y = y;
+	    };
+
+	    that.draw = function() {
+			context.save();
+			if(mapImage == 'undefined'){
+				navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
+			}
+			if(mapImage != 'undefined'){
+				setTimeout(function(){}, 1000);
+				console.log(mapImage);
+				context.drawImage(
+					mapImage,
+					spec.x - spec.width/2, 
+					spec.y - spec.height/2,
+					spec.width, spec.height);
+			}
+			
+			context.restore();
+		};
+	    return that;
+	}
 
     //---------------------------------------------------
     //
@@ -198,27 +233,10 @@ MYGAME.graphics = (function() {
     //  Function used to draw canvas backgrounds
     //
     //---------------------------------------------------
-	function background(image, lat, longitude) {
-		if(typeof(lat) !== 'undefined' && typeof(longitude) !== 'undefined'){
-			var google_tile = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" +lat + "," +
-	                    longitude + "&zoom=14&size=300x400&markers=color:blue|label:U|" +
-	                    lat + ',' + longitude;
-		      
-		    var imageObj = new Image();
-		    imageObj.src = google_tile;
-	    
-		    // context.save();
-		    context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
-		    // context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
-		    // context.restore();
-		}
-		else{
+	function background(image) {
 		    context.save();
-		     context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
+		    context.drawImage(MYGAME.images[image], 0, 0, canvas.width, canvas.height);
 		    context.restore();
-			
-		}
-
 	}
 
     //---------------------------------------------------
@@ -250,9 +268,34 @@ MYGAME.graphics = (function() {
 	    Texture: Texture,
 	    Text: Text,
 	    Person: Person,
+	    map: map,
         background: background,
 	    roundRect: roundRect,
 	    canvas: canvas,
         context: context
 	};
 }());
+
+
+function handle_errors(error){
+		switch(error.code){
+		case error.PERMISSION_DENIED: alert("user did not share geolocation data");
+		break;
+		case error.POSITION_UNAVAILABLE: alert("could not detect current position");
+		break;
+		case error.TIMEOUT: alert("retrieving position timed out");
+		break;
+		default: alert("unknown error");
+		break;
+	}
+}
+
+function handle_geolocation_query(position){
+    var image_source = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +
+                    position.coords.longitude + "&zoom=14&size=300x400&markers=color:blue|label:U|" +
+                    position.coords.latitude + ',' + position.coords.longitude;
+    var imageObj = new Image();
+    imageObj.src = image_source;
+    mapImage = imageObj;
+    console.log(mapImage);
+}
