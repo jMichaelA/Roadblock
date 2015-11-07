@@ -48,10 +48,19 @@ MYGAME.graphics = (function() {
 
 	    that.getPos = function () {
 	    	return {
-	    		x: spec.x,
-	    		y: spec.y
-	    	};
-	    }
+				x: spec.x,
+				y: spec.y,
+				radius: spec.radius,
+			};
+	    };
+
+	    that.dieF = function (val) {
+	    	spec.dead = val;
+	    };
+
+	    that.isDead = function () {
+	    	return spec.dead;
+	    };
 
 	    that.setPos = function (x, y) {
 	        spec.x = x;
@@ -220,7 +229,7 @@ MYGAME.graphics = (function() {
 	    that.goUp = function (elapsedTime){
 			
 			//console.log("stop: "+spec.stop+" stopTime: "+spec.stopTime);
-			console.log("UstopTime: "+spec.stopTime);
+			//console.log("UstopTime: "+spec.stopTime);
 			if(spec.stop == false) {
 				spec.rotation = (3.14/2); 
 				spec.y += spec.speed * elapsedTime * -1;
@@ -228,7 +237,7 @@ MYGAME.graphics = (function() {
 		};
 		
 		that.goDown = function (elapsedTime){
-			console.log("DstopTime: "+spec.stopTime);
+			//console.log("DstopTime: "+spec.stopTime);
 			if(spec.stop == false) {
 				spec.rotation = 3*(3.14/2);
 				spec.y += spec.speed * elapsedTime * 1;
@@ -237,7 +246,7 @@ MYGAME.graphics = (function() {
 		};
 		
 		that.goLeft = function (elapsedTime){
-			console.log("LstopTime: "+spec.stopTime);
+			//console.log("LstopTime: "+spec.stopTime);
 			if(spec.stop == false) {
 				spec.rotation = 0;
 				spec.x += spec.speed * elapsedTime * -1;
@@ -245,7 +254,7 @@ MYGAME.graphics = (function() {
 		};
 		
 		that.goRight = function (elapsedTime){
-			console.log("RstopTime: "+spec.stopTime);
+			//console.log("RstopTime: "+spec.stopTime);
 			if(spec.stop == false) {
 				spec.rotation = 3.14;
 				spec.x += spec.speed * elapsedTime * 1;

@@ -22,6 +22,8 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
 
         that.initialize = function () {
+            
+
             $('#new_game').on('click',function(){
                 mmClicked = true;
                 $('#main_menu').hide();
@@ -45,7 +47,6 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
             var canvas = document.getElementById('id-canvas');
 		
             mouse.update(elapsedTime);
-            
             
             //-----------------------------
             //  IF CLICKED

@@ -105,10 +105,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	randomStartPos.x, y:randomStartPos.y,
 				width : 34, height : 48,
+                radius: 10,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
-				die: false,
+				dead: false,
 				sel: false,
 			}),
 			
@@ -119,10 +120,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 						MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_1.png'],MYGAME.images['media/WalkR_2.png'],MYGAME.images['media/WalkR_3.png']],
 				x:	200, y:300 ,
 				width : 34, height : 48,
+                radius: 10,
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
-				die: false,
+				dead: false,
 				sel: false,
 			}),
 			
@@ -256,6 +258,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             mouse.registerCommand('mousemove', that.mouseOver);
             mouse.registerCommand('mousedown', that.click);
 
+            $('#main_menu').hide();
+
             that.dead = false;
             sec = 0;
             secCount = 0;
@@ -288,8 +292,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			//----------------------------------------------
             //  UPDATE PERSON POSITION
             //----------------------------------------------
-			/*tempTime += elapsedTime;
-            var curve = new CurveAnimator([50, 300], [350, 300], [445, 39], [1, 106]);
+			tempTime += elapsedTime;
+            /*var curve = new CurveAnimator([50, 300], [350, 300], [445, 39], [1, 106]);
 
             curve.animate(10, function(point, angle){
                 if(point.x > person1.getPos().x){
@@ -311,7 +315,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                 //person1.draw();
             });*/
 
-			/*if(tempTime <= 5){
+			if(tempTime <= 5){
 				person1.goDown(elapsedTime);
 			}
 			else if(tempTime > 5 && tempTime <= 10){
@@ -325,7 +329,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			}
 			else{
 				tempTime = 0;
-			}*/
+			}
 			
 			
             //----------------------------------------------
@@ -373,6 +377,26 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             }
 
             //----------------------------------------------
+            //  CHECK FOR COLLISIONS WITH HUMAN
+            //----------------------------------------------
+
+            objPos1 = car1.getPos();
+            objPos2 = person1.getPos();
+ 
+            distanceX = Math.abs(objPos1.x - objPos2.x);
+            distanceY = Math.abs(objPos1.y - objPos2.y);
+
+            if(distanceX <= (objPos1.radius+objPos2.radius) && distanceY <= (objPos1.radius+objPos2.radius)){
+                    //Collision with Stop Sign
+                    person1.dieF(true);
+                    console.log("Game Over");
+                
+            }
+            else{
+                person1.dieF(false);
+            }
+
+            //----------------------------------------------
             //  UPDATE CAR POSITION
             //----------------------------------------------
             tempTime2 += elapsedTime;
@@ -396,7 +420,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             
 
             //Check for GAME OVER
-            if (min > 0) {
+            if (person1.isDead()) {
 
                 gameStack[gameStack.length] = MYGAME.menus['GameOverState'].Menu();
                 gameStack[gameStack.length - 1].initialize();
