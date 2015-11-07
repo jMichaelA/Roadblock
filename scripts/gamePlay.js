@@ -56,65 +56,11 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				speed : 60,	//pixels per second
 				rotation: 0,
 			}),
-
-            /*//--------------------------------
-            //  TEXT OBJECTS
+			
+			//--------------------------------
+            //  OTHER VARS
             //--------------------------------
-            scoreText = graphics.Text({
-                font: '24px Arial',
-                align: 'left',
-                textColor: 'black',
-                text: 'Score:',
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 1.5,
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-            scoreDisplay = graphics.Text({
-                font: '20px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 0,
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 4,
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-            timeText = graphics.Text({
-                font: '24px Arial',
-                align: 'left',
-                textColor: 'black',
-                text: 'Time:',
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 1.5,
-                y: ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2)
-            }),
-            timeDisplay = graphics.Text({
-                font: '20px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 0,
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 10) * 4,
-                y: ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2)
-            }),
-            levelText = graphics.Text({
-                font: '24px Arial',
-                align: 'left',
-                textColor: 'black',
-                text: 'Level',
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)),
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-            levelDisplay = graphics.Text({
-                font: '20px Arial',
-                align: 'center',
-                textColor: 'lightgreen',
-                text: 0,
-                baseLine: 'middle',
-                x: (graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)),
-                y: ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15)
-            }),
-*/
+
             tWidth = 0,
             tHeight = 0,
             tPos = {},
@@ -130,7 +76,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
             mouse = input.Mouse();
 
-
+		//--------------------------------
+        //  MOUSE OVER FUNCTION
+        //--------------------------------
         that.mouseOver = function (e) {
 
             var canX = 0,
@@ -142,12 +90,17 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 
         };
 
-
+		//--------------------------------
+        //  CLICK FUNCTION
+        //--------------------------------
         that.click = function (e) {
             
 
         };
-
+		
+		//--------------------------------
+        //  INITIALIZE 
+        //--------------------------------
         that.initialize = function () {
             
             mouse.registerCommand('mousemove', that.mouseOver);
@@ -163,6 +116,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
         }
 
 
+		//--------------------------------
+        //  UPDATE 
+        //--------------------------------
         that.update = function (elapsedTime) {
 
             //UPDATE MOUSE
@@ -210,22 +166,6 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				tempTime2 = 0;
 			}
 			
-			
-            //----------------------------------------------
-            //  UPDATE TEXT POSITIONS
-            //----------------------------------------------
-            /*scoreText.setPos((graphics.canvas.width / 10) * 1.5, ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
-            scoreDisplay.setPos((graphics.canvas.width / 10) * 4.6, ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
-
-            timeText.setPos((graphics.canvas.width / 10) * 1.5, ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2));
-            timeDisplay.setPos((graphics.canvas.width / 10) * 4.2, ((graphics.canvas.height / 4) * 3) + ((graphics.canvas.width / 10) * 2));
-
-            tWidth = levelText.getWidth();
-            tHeight = levelText.getHeight();
-            tPos = levelText.getPos();
-            levelText.setPos((graphics.canvas.width / 2) + (2 * (graphics.canvas.width / 10)), ((graphics.canvas.height / 4) * 3) + (graphics.canvas.width / 15));
-            levelDisplay.setPos(tPos.x + tWidth / 2, tPos.y + tHeight + (tHeight / 1.5))
-*/
             //----------------------------------------------
             //  UPDATE VALUES
             //----------------------------------------------
