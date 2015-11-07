@@ -159,7 +159,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             carStatus = {},
             k = 0,
             detourF = false,
-            justSet = false,
+            justSet = 30,
 
             sec = 0,
             secCount = 0,
@@ -396,7 +396,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tempTime2 += elapsedTime;
             carStatus = car1.getFlags();
             
-            if(justSet === false){
+            if(justSet > 30){    
                 detourF = carStatus.detour;
             }
             
@@ -427,16 +427,19 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
                     car1.goRight(elapsedTime);
                     
                 }
-            }
-            else if(justSet === true){
-                justSet = false;
+
+                justSet++;
             }
             else{
                 car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
                 tempTime2 = 0;
-                detourF = false;
-                justSet = true;
+
+                if(detourF === true){
+                    detourF = false;
+                    justSet = 0;
+                }
             }
+
             //Check for GAME OVER
             if (person1.isDead()) {
 
