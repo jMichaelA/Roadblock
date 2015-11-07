@@ -10,8 +10,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //  map object
             //--------------------------------            
             map = graphics.map( {
-                x:  500, y: 500,
-                width : 300, height : 350,
+                x:  graphics.canvas.width/2, 
+                y: graphics.canvas.height/2,
+                width : graphics.canvas.width, height : graphics.canvas.height,
             }),
             //  HUD Object
             //--------------------------------
@@ -238,7 +239,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //  DRAW Map
             //--------------------------------
 
-            map.draw();
+            // map.draw();
 
             //--------------------------------
             //Clear Canvas
@@ -249,9 +250,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			//--------------------------------
             //  DRAW PERSON
             //--------------------------------
-
+            map.draw();
 			person1.draw();
-			map.draw();
 			hud.draw();
 
             //Draw Info Box

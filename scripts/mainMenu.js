@@ -77,7 +77,7 @@ MYGAME.menus['MainMenuState'] = (function (graphics,input, gameStack) {
 
         that.render = function () {
 
-            graphics.clear();
+            // graphics.clear();
 
             //Draw main background
             graphics.background('media/mainMenuBg.png');

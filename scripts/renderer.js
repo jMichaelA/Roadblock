@@ -142,6 +142,7 @@ MYGAME.graphics = (function() {
 			context.restore();
 		};
 	    return that;
+	}
 	//
 	//	Hud Factory Function
 	//
@@ -384,7 +385,7 @@ MYGAME.graphics = (function() {
 	    Person: Person,
 	    map: map,
 	    HUD: HUD,
-	     	background: background,
+	    background: background,
 	    roundRect: roundRect,
 	    canvas: canvas,
         context: context
