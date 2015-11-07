@@ -304,12 +304,11 @@ MYGAME.graphics = (function() {
 	        context.strokeStyle = 'black';
 	        context.lineWidth = 3;
 	        context.fillStyle = "#bbb";
-	        context.rect(spec.x,spec.y,spec.width,spec.height); 
-	    	context.stroke();
-	    	context.fill();
+	        context.strokeRect(spec.x,spec.y,spec.width,spec.height);
+	        context.fillRect(spec.x,spec.y,spec.width,spec.height);
 
 	    	//Draw rectangle for level
-	    	context.rect(spec.levelX - 10,spec.levelY - 30,150,spec.height);
+	    	context.strokeRect(spec.levelX - 10,spec.levelY - 30,150,spec.height);
 	    	context.stroke();
 
 	    	//Text for level

@@ -257,9 +257,9 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             //--------------------------------
             map.draw();
 			person1.draw();
-			if(!person2.getDeath()){
+		/*	if(!person2.getDeath()){
 				person2.draw();
-			}
+			}*/
 			car1.draw();
 			hud.draw();
             hud_stop.draw();
