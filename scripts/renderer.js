@@ -518,4 +518,16 @@ function handle_geolocation_query(position){
     var imageObj = new Image();
     imageObj.src = image_source;
     mapImage = imageObj;
+    getRoadLatLongs();
+}
+
+function getRoadLatLongs(){
+	$.ajax({
+	  type:     "GET",
+	  url:      "http://maps.googleapis.com/maps/api/geocode/json?latlng=41.7419047,-111.81138809999999&sensor=true_or_false",
+	  dataType: "json",
+	  success: function(data){
+	    console.log(data);
+	  }
+	});
 }
