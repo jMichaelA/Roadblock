@@ -109,12 +109,8 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
-<<<<<<< HEAD
                 direction: Math.floor(Math.random() * (4 - 1 + 1)) + 1,
-				die: false,
-=======
 				dead: false,
->>>>>>> 9a42a53b5eef70c0dcbe60cde4d57bb6d70dfe0d
 				sel: false,
 			}),
 			
@@ -302,7 +298,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tempTime += elapsedTime;
             
             if(tempTime <= 5){
-                if(edgeDetect(person1.getPos().x,person1.getPos().y) != 'None'){
+                if(edgeDetect(person1.getPos().x,person1.getPos().y,person1.getPos().radius,person1.getDirection()) != 'None'){
                     person1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
                 }
 
@@ -397,22 +393,31 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
             tempTime2 += elapsedTime;
             carStatus = car1.getFlags();
             
-            if(tempTime2 <= 6){
-                car1.goDown(elapsedTime);
-            }
-            else if(tempTime2 > 6 && tempTime2 <= 12){
-                car1.goRight(elapsedTime);
-            }
-            else if(tempTime2 > 12 && tempTime2 <= 18){
-                car1.goUp(elapsedTime);
-            }
-            else if(tempTime2 > 18 && tempTime2 <= 24){
-                car1.goLeft(elapsedTime);
-            }
-            else{
+            if(tempTime2 <= 5){
+                if(edgeDetect(car1.getPos().x,car1.getPos().y,car1.getPos().radius,car1.getDirection()) != 'None'){
+                    car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
+                }
+
+                //edgeDetect(person1.getPos().x,person1.getPos().y);
+                if(car1.getDirection() == 1){
+                    car1.goUp(elapsedTime);
+                }
+
+                if(car1.getDirection() == 2){
+                    car1.goDown(elapsedTime);
+                }
+
+                if(car1.getDirection() == 3){
+                    car1.goLeft(elapsedTime);
+                }
+
+                if(car1.getDirection() == 4){
+                    car1.goRight(elapsedTime);
+                }
+            }else{
+                car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
                 tempTime2 = 0;
             }
-
             //Check for GAME OVER
             if (person1.isDead()) {
 
@@ -489,26 +494,31 @@ function findNearestRoad(x,y){
     console.log(pix);
 }
 
-function edgeDetect(x,y,current_direction){
+function edgeDetect(x,y,radius,current_direction){
     canvas = document.getElementById('id-canvas');
     ctx = canvas.getContext('2d');
-    
-    direction = 'None';
 
-    if(x >= 5 && x <= 10 && current_direction == 3){
-        direction = 'left';
+    direction = 'None';
+ 
+    distanceBottom = Math.abs(y - (canvas.height-60))
+    distanceTop = Math.abs(y - 0);
+    distanceLeft = Math.abs(x - 0);
+    distanceRight = Math.abs(x - (canvas.width));
+
+    if(distanceTop <= radius && current_direction == 1){
+        direction = 'top';
     }
 
-    if(x <= canvas.width && x >= canvas.width - 10 && current_direction == 4){
+    if(distanceBottom <= radius && current_direction == 2){
+        direction = 'bottom';
+    }
+
+    if(distanceRight <= radius && current_direction == 4){
         direction = 'right';
     }
 
-    if(y >= 0 && y <= 10 && current_direction == 1){
-        direction = 'up';
-    }
-
-    if(y <= canvas.height && y >= canvas.height - 70 && current_direction == 2){
-        direction = 'down';
+    if(distanceLeft <= radius && current_direction == 3){
+        direction = 'left';
     }
 
     return direction;
