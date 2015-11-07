@@ -95,6 +95,14 @@ MYGAME.graphics = (function() {
 			spec.die = state;
 		};
 		
+		that.getDirection = function(){
+			return spec.direction;
+		}
+
+		that.setDirection = function(direction){
+			spec.direction = direction;
+		}
+
 		that.getDeath = function() {
 			return spec.die;
 		};
@@ -166,10 +174,25 @@ MYGAME.graphics = (function() {
 	function Car(spec) {
 	    var that = {};
 
+	   	that.getPos = function () {
+	    	return {
+	    		x: spec.x,
+	    		y: spec.y
+	    	};
+	    }
+
 	    that.setPos = function (x, y) {
 	        spec.x = x;
 	        spec.y = y;
 	    };
+
+	    that.getDirection = function(){
+			return spec.direction;
+		}
+
+		that.setDirection = function(direction){
+			spec.direction = direction;
+		}
 
 	    that.goUp = function (elapsedTime){
 			spec.rotation = (3.14/2); 
@@ -709,7 +732,11 @@ function getRoadLatLongs(lat,longitude){
 		}, function(data) {
 		    processSnapToRoadResponse(data);
 		    drawSnappedPolyline();
-		    console.log(data);
+	/*	    for(var i = 0; i < snappedCoordinates.length; i++){
+		    	console.log(snappedCoordinates[i].lat());
+		    	console.log(getCoordPixels(snappedCoordinates[i].lat(),snappedCoordinates[i].lng()));
+		    }*/
+		    //console.log(data);
 		});
 }
 

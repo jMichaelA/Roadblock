@@ -6,6 +6,18 @@ var placeIdArray = [];
 var polylines = [];
 var snappedCoordinates = [];
 
+// overlay;
+
+//overlay = new google.maps.OverlayView();
+
+function getCoordPixels(lat, lng) {
+  lat_lng = new google.maps.LatLng(lat,lng);
+  overlay = new google.maps.OverlayView();
+  var overlayProjection = overlay.getProjection();
+
+  return overlayProjection.fromLatLngToDivPixel(lat_lng);
+}
+
 function initializeMap(lat_lng) {
   var mapOptions = {
     zoom: 17,

@@ -102,6 +102,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				speed : 15,	//pixels per second
 				iter: 0,
 				imgTime: 0,
+                direction: Math.floor(Math.random() * (4 - 1 + 1)) + 1,
 				die: false,
 				sel: false,
 			}),
@@ -128,6 +129,7 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 				image : MYGAME.images['media/car.png'],
 				x:	700, y: 200 ,
 				width : 96, height : 48,
+                direction: Math.floor(Math.random() * (4 - 1 + 1)) + 1,
 				speed : 60,	//pixels per second
 				rotation: 0,
 			}),
@@ -272,65 +274,65 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
 			//----------------------------------------------
             //  UPDATE PERSON POSITION
             //----------------------------------------------
-			/*tempTime += elapsedTime;
-            var curve = new CurveAnimator([50, 300], [350, 300], [445, 39], [1, 106]);
 
-            curve.animate(10, function(point, angle){
-                if(point.x > person1.getPos().x){
-                    person1.goRight(elapsedTime);
+
+            tempTime += elapsedTime;
+            
+            if(tempTime <= 5){
+                if(edgeDetect(person1.getPos().x,person1.getPos().y) != 'None'){
+                    person1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
                 }
 
-                if(point.x < person1.getPos().x){
-                    person1.goLeft(elapsedTime);
+                //edgeDetect(person1.getPos().x,person1.getPos().y);
+                if(person1.getDirection() == 1){
+                    person1.goUp(elapsedTime);
                 }
 
-                if(point.y > person1.getPos().y){
+                if(person1.getDirection() == 2){
                     person1.goDown(elapsedTime);
                 }
 
-                if(point.y < person1.getPos().y){
-                    person1.goUp(elapsedTime);
+                if(person1.getDirection() == 3){
+                    person1.goLeft(elapsedTime);
                 }
-                person1.setPos(point.x,point.y);
-                //person1.draw();
-            });*/
 
-			/*if(tempTime <= 5){
-				person1.goDown(elapsedTime);
-			}
-			else if(tempTime > 5 && tempTime <= 10){
-				person1.goRight(elapsedTime);
-			}
-			else if(tempTime > 10 && tempTime <= 15){
-				person1.goUp(elapsedTime);
-			}
-			else if(tempTime > 15 && tempTime <= 20){
-				person1.goLeft(elapsedTime);
-			}
-			else{
-				tempTime = 0;
-			}*/
+                if(person1.getDirection() == 4){
+                    person1.goRight(elapsedTime);
+                }
+            }else{
+                person1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
+                tempTime = 0;
+            }
 			
 			//----------------------------------------------
             //  UPDATE CAR POSITION
             //----------------------------------------------
 			tempTime2 += elapsedTime;
-			
 			if(tempTime2 <= 5){
-				car1.goDown(elapsedTime);
-			}
-			else if(tempTime2 > 5 && tempTime2 <= 10){
-				car1.goRight(elapsedTime);
-			}
-			else if(tempTime2 > 10 && tempTime2 <= 15){
-				car1.goUp(elapsedTime);
-			}
-			else if(tempTime2 > 15 && tempTime2 <= 20){
-				car1.goLeft(elapsedTime);
-			}
-			else{
-				tempTime2 = 0;
-			}
+                if(edgeDetect(car1.getPos().x,car1.getPos().y) != 'None'){
+                    car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
+                }
+
+                //edgeDetect(person1.getPos().x,person1.getPos().y);
+                if(car1.getDirection() == 1){
+                    car1.goUp(elapsedTime);
+                }
+
+                if(car1.getDirection() == 2){
+                    car1.goDown(elapsedTime);
+                }
+
+                if(car1.getDirection() == 3){
+                    car1.goLeft(elapsedTime);
+                }
+
+                if(car1.getDirection() == 4){
+                    car1.goRight(elapsedTime);
+                }
+            }else{
+                car1.setDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1);
+                tempTime2 = 0;
+            }
 
             //Check for GAME OVER
             if (min > 0) {
@@ -394,3 +396,38 @@ MYGAME.menus['GamePlayState'] = (function (graphics, input, gameStack) {
     };
 
 }(MYGAME.graphics, MYGAME.input, MYGAME.gameStack));
+
+function findNearestRoad(x,y){
+    canvas = document.getElementById('id-canvas');
+    ctx = canvas.getContext('2d');
+        
+    imgdata = ctx.getImageData(0,0,1200,600);
+    var pix = imgdata.data;
+
+    console.log(pix);
+}
+
+function edgeDetect(x,y,current_direction){
+    canvas = document.getElementById('id-canvas');
+    ctx = canvas.getContext('2d');
+    
+    direction = 'None';
+
+    if(x >= 5 && x <= 10 && current_direction == 3){
+        direction = 'left';
+    }
+
+    if(x <= canvas.width && x >= canvas.width - 10 && current_direction == 4){
+        direction = 'right';
+    }
+
+    if(y >= 0 && y <= 10 && current_direction == 1){
+        direction = 'up';
+    }
+
+    if(y <= canvas.height && y >= canvas.height - 70 && current_direction == 2){
+        direction = 'down';
+    }
+
+    return direction;
+}
