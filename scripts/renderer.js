@@ -1,4 +1,6 @@
 var mapImage = 'undefined';
+var globalPosition = 'undefined';
+var globalGeolocation = 'undefined';
 navigator.geolocation.getCurrentPosition(handle_geolocation_query,handle_errors);
 
 
@@ -228,8 +230,8 @@ MYGAME.graphics = (function() {
 				var position = {
 					coords: {
 						accuracy: 53,
-						latitude: 41.7419047,
-						longitude: -111.81138809999999
+						latitude: 40.7500,
+						longitude: -111.8833
 					}
 				};
 				var img = handle_geolocation_query(position);
@@ -547,24 +549,52 @@ function handle_errors(error){
 }
 
 function handle_geolocation_query(position){
-	var canvas = document.getElementById('id-canvas');
-    var image_source = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +
-                    position.coords.longitude + "&zoom=18&size="+canvas.width+"x"+
-                    canvas.height+"&style=&style=feature:road|element:geometry|weight:5.5|color:black|lightness:100&style=element:geometry.stroke|visibility:off&style=feature:landscape|element:geometry|saturation:-100&style=feature:water|saturation:-100|invert_lightness:true?key=AIzaSyB9-sOEES1LmBR83pxuLoJzsKWBqXZCa5k";
+	globalPosition=position;
+	getRoadLatLongs();
 
     var imageObj = new Image();
-    imageObj.src = image_source;
+    imageObj.src = getGoogleMap(position.coords.latitude, position.coords.longitude);
     mapImage = imageObj;
-    getRoadLatLongs();
 }
 
-function getRoadLatLongs(){
+function getRoadLatLongs(lat,longitude){
+	if(lat !== 'undefined' && longitude !== 'undefined'){
+		if(mapImage == 'undefined'){
+			lat = 41.7419047;
+			longitude = -111.81138809999999;
+		}else{
+			lat=globalPosition.coords.latitude;
+			longitude=globalPosition.coords.longitude;
+		}
+	}
+
 	$.ajax({
 	  type:     "GET",
-	  url:      "http://maps.googleapis.com/maps/api/geocode/json?latlng=41.7419047,-111.81138809999999&sensor=true_or_false",
+	  url:      "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + longitude-.009 + "&sensor=true_or_false",
 	  dataType: "json",
+	  async:   false, 
 	  success: function(data){
-	    console.log(data);
+	  	window.globalGeolocation = data;
 	  }
 	});
+}
+
+function getGoogleMap(lat, longitude){
+	var markers = "";
+	console.log(window.globalGeolocation.results);
+
+	for(var i in window.globalGeolocation.results) {
+		markers += "&markers=color:red%7Clabel:" + i + "%7C" + window.globalGeolocation.results[i].geometry.bounds.northeast.lat
+		+ "," + window.globalGeolocation.results[i].geometry.bounds.northeast.lng +
+		 "&markers=color:blue%7Clabel:" + i + "%7C" + window.globalGeolocation.results[i].geometry.bounds.southwest.lat + "," +
+		 window.globalGeolocation.results[i].geometry.bounds.southwest.lng;
+	}
+	console.log(markers);
+	longitude += -.009;
+	var canvas = document.getElementById('id-canvas');
+    var image_source = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + lat + "," +
+                    longitude + "&zoom=10&size="+canvas.width+"x"+
+                    canvas.height+ markers + "&style=feature:road|element:geometry|weight:5.5|color:black|lightness:100&style=element:geometry.stroke|visibility:off&style=feature:landscape|element:geometry|saturation:-100&style=feature:water|saturation:-100|invert_lightness:true?key=AIzaSyB9-sOEES1LmBR83pxuLoJzsKWBqXZCa5k";
+                    console.log(image_source);
+    return image_source;
 }
