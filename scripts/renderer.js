@@ -30,7 +30,7 @@ MYGAME.graphics = (function() {
 	};
 
 	function clear() {
-	    context.clear;
+	    context.clear();
 	}
 
 
@@ -46,28 +46,60 @@ MYGAME.graphics = (function() {
 	        spec.x = x;
 	        spec.y = y;
 	    };
+		
+		that.setIter = function (iter) {
+			spec.iter = iter;
+		};
 
-	    that.goUp = function (){
-		
+	    that.goUp = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.3){
+				spec.iter = ((spec.iter+1)%4)+4;
+				spec.imgTime = 0;
+			}
+			
+			spec.y += spec.speed * elapsedTime * -1;
 		};
 		
-		that.goDown = function (){
-		
+		that.goDown = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.3){
+				spec.iter = (spec.iter+1)%4;
+				spec.imgTime = 0;
+			}
+			
+			spec.y += spec.speed * elapsedTime * 1; 
 		};
 		
-		that.goLeft = function (){
-		
+		that.goLeft = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.3){
+				spec.iter = ((spec.iter+1)%4)+8;
+				spec.imgTime = 0;
+			}
+			
+			spec.x += spec.speed * elapsedTime * -1;
 		};
 		
-		that.goRight = function (){
-		
+		that.goRight = function (elapsedTime){
+			spec.imgTime += elapsedTime;
+			
+			if(spec.imgTime > 0.3){
+				spec.iter = ((spec.iter+1)%4)+12;
+				spec.imgTime = 0;
+			}
+			
+			spec.x += spec.speed * elapsedTime * 1;
 		};
 
 	    that.draw = function() {
 			context.save();
 			
 			context.drawImage(
-				spec.image,
+				spec.images[spec.iter],
 				spec.x - spec.width/2, 
 				spec.y - spec.height/2,
 				spec.width, spec.height);
@@ -110,6 +142,88 @@ MYGAME.graphics = (function() {
 			context.restore();
 		};
 	    return that;
+	//
+	//	Hud Factory Function
+	//
+	//---------------------------------------------------
+
+	function HUD(spec){
+		var that = {};
+
+		that.setPos = function(x, y){
+			spec.x = x;
+			spec.y = y;
+		};
+
+		that.getPos = function(){
+			return {
+				x: spec.x,
+				y: spec.y
+			};
+		};
+
+		that.setLevelPos = function(x, y){
+			spec.levelX = x;
+			spec.levelY = y;
+		};
+
+		that.getLevelPos = function(){
+			return {
+				x: spec.levelX,
+				y: spec.levelY
+			}
+		};
+
+		that.getLevel = function(){
+			return spec.level;
+		}
+
+		that.setLevel = function(level){
+			spec.level = level;
+		}
+
+		that.setWidth = function(width){
+			spec.width = width;
+		};
+
+		that.getWidth = function(){
+			return spec.width;
+		};
+
+		that.setHeight = function(height){
+			spec.height = height;
+		};
+
+		that.getHeight = function(){
+			return spec.height;
+		};
+
+		that.draw = function () {
+	        context.save();
+	        context.strokeStyle = 'black';
+	        context.lineWidth = 3;
+	        context.fillStyle = "#bbb";
+	        context.rect(spec.x,spec.y,spec.width,spec.height); 
+	    	context.stroke();
+	    	context.fill();
+
+	    	//Draw rectangle for level
+	    	context.rect(spec.levelX - 10,spec.levelY - 40,150,spec.height);
+	    	context.stroke();
+
+	    	//Text for level
+	    	context.font = '30px Arial';
+	        context.textAlign = 'left';
+	        context.textBaseline = 'middle';
+	        context.fillStyle = 'black';
+	        context.fillText('Level: ' + spec.level, spec.levelX, spec.levelY);
+
+	        //Draw HUD elements
+
+	        context.restore();
+	    };
+
+		return that;
 	}
 
     //---------------------------------------------------
@@ -269,7 +383,8 @@ MYGAME.graphics = (function() {
 	    Text: Text,
 	    Person: Person,
 	    map: map,
-        background: background,
+	    HUD: HUD,
+	     	background: background,
 	    roundRect: roundRect,
 	    canvas: canvas,
         context: context
