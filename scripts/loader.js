@@ -55,6 +55,7 @@ window.addEventListener('load', function() {
 				'preload!media/Detour.png',
 				'preload!media/StopSign.png',
                 'preload!scripts/soundPlayer.js',
+                'preload!scripts/curveAnimator.js',
 				//'preload!media/sounds/arcadeSound.' + MYGAME.audioExt,
                 'preload!scripts/renderer.js',
                 'preload!scripts/Input.js',
@@ -65,7 +66,8 @@ window.addEventListener('load', function() {
                 'preload!scripts/highScoresMenu.js',
                 'preload!scripts/creditsMenu.js',
                 'preload!scripts/jquery.js',
-				'preload!scripts/game.js'
+				'preload!scripts/game.js',
+				'preload!scripts/invisiMap.js'
 			],
 			complete : function() {
 				console.log('All files requested for loading...');
