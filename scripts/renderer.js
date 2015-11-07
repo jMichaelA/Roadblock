@@ -282,11 +282,6 @@ MYGAME.graphics = (function() {
 	        context.fillStyle = 'black';
 	        context.fillText('Level: ' + spec.level, spec.levelX, spec.levelY);
 
-	        //Draw HUD elements
-	        for(var i = 0; i < spec.HUD_elements.length; i++){
-	        	context.drawImage(spec.HUD_elements[i][0], spec.levelX + 150*(i+1), spec.levelY - 28, 50, 50);
-	        	context.fillText(spec.HUD_elements[i][1], spec.levelX + 60 + (150*(i+1)),spec.levelY);
-	        }
 	        context.restore();
 	    };
 
@@ -308,10 +303,28 @@ MYGAME.graphics = (function() {
 			};
 		};
 
+		that.getWidth = function(){
+			return spec.x + 150;
+		}
+
 		that.setPos = function(x, y){
 			spec.x = x;
 			spec.y = y;
-		}
+		};
+
+		that.draw = function(){
+			context.save();
+
+			context.drawImage(spec.image, spec.x, spec.y + 12, 50, 50);
+
+	       	context.font = '30px Arial';
+	        context.textAlign = 'left';
+	        context.textBaseline = 'middle';
+	        context.fillStyle = 'black';
+	       	context.fillText(spec.count, spec.x + 60,spec.y + 40);
+
+			context.restore();
+		};
 
 		return that;
 	}
@@ -474,6 +487,7 @@ MYGAME.graphics = (function() {
 		Car: Car,
 	    map: map,
 	    HUD: HUD,
+	    HUD_Element: HUD_Element,
 	    background: background,
 	    roundRect: roundRect,
 	    canvas: canvas,
